@@ -82,6 +82,9 @@ public class Ladybug extends Movable implements ISteerable {
     @Override
     public void setSpeed(int speed) {
         speed = speed * (healthLevel / 10);
+        if (speed > maximumSpeed) {
+            speed = maximumSpeed;
+        }
         super.setSpeed(speed);
     }
 
