@@ -114,6 +114,10 @@
 	        <copy todir="build/tmp">
 	            <fileset dir="lib/impl/cls" includes="**/*"/> 
 	        </copy>
+
+			<copy todir="bin/">
+				<fileset dir="build/tmp"/>
+			</copy>
 	        	        
 	        <jar jarfile="${dist.jar}" includes="**/*" basedir="build/tmp" >
 		    	<exclude name="**/package-info.class" />
