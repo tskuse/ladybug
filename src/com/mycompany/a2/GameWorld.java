@@ -1,10 +1,12 @@
 package com.mycompany.a2;
 
-import java.util.ArrayList;
-import java.util.Random;
 import com.codename1.ui.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Random;
+import java.util.Vector;
 
-public class GameWorld {
+public class GameWorld extends Observable {
     
     private final int STARTING_LIVES = 3;
     private final int ACCELERATION_QTY = 5;
@@ -15,7 +17,7 @@ public class GameWorld {
     private int livesRemaining;
 
     private Ladybug player;
-    private ArrayList<GameObject> objects;
+    private Vector<GameObject> objects;
 
     public GameWorld() {
         this.clockTime = 0;
@@ -31,7 +33,7 @@ public class GameWorld {
             exit();
         }
 
-        this.objects = new ArrayList<GameObject>();
+        this.objects = new Vector<GameObject>();
         
         Random random = new Random();
         for (int i = 0; i < TOTAL_FLAGS; i++) {
