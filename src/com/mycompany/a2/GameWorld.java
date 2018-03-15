@@ -1,7 +1,6 @@
 package com.mycompany.a2;
 
 import com.codename1.ui.geom.Point2D;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 import java.util.Vector;
