@@ -43,21 +43,29 @@ public class Game extends Form {
                  BoxLayout.encloseY(sv, FlowLayout.encloseCenter(myLabel, myTextField)));
 
         this.add(BorderLayout.WEST,
-                 BoxLayout.encloseY(new Button(new AccelerateCommand(gw)),
-                                    new Button(new TurnLeftCommand(gw))));
+                 BoxLayout.encloseY(new Button(AccelerateCommand.getCommand(gw)),
+                                    new Button(TurnLeftCommand.getCommand(gw))));
 
         this.add(BorderLayout.CENTER, mv);
         
         this.add(BorderLayout.EAST,
-                 BoxLayout.encloseY(new Button(new BrakeCommand(gw)),
-                                    new Button(new TurnRightCommand(gw))));
+                 BoxLayout.encloseY(new Button(BrakeCommand.getCommand(gw)),
+                                    new Button(TurnRightCommand.getCommand(gw))));
 
         this.add(BorderLayout.SOUTH,
-                 FlowLayout.encloseCenter(new Button(new CollideFlagCommand(gw)),
-                                          new Button(new CollideSpiderCommand(gw)),
-                                          new Button(new CollideFoodCommand(gw)),
-                                          new Button(new TickClockCommand(gw))));        
+                 FlowLayout.encloseCenter(new Button(CollideFlagCommand.getCommand(gw)),
+                                          new Button(CollideSpiderCommand.getCommand(gw)),
+                                          new Button(CollideFoodCommand.getCommand(gw)),
+                                          new Button(TickClockCommand.getCommand(gw))));        
 
+        this.addKeyListener('a', AccelerateCommand.getCommand(gw));
+        this.addKeyListener('b', BrakeCommand.getCommand(gw));
+        this.addKeyListener('l', TurnLeftCommand.getCommand(gw));
+        this.addKeyListener('r', TurnRightCommand.getCommand(gw));
+        this.addKeyListener('f', CollideFoodCommand.getCommand(gw));
+        this.addKeyListener('g', CollideSpiderCommand.getCommand(gw));
+        this.addKeyListener('t', TickClockCommand.getCommand(gw));
+        
         this.show();
         
         myTextField.addActionListener(new ActionListener<ActionEvent>() {
@@ -90,54 +98,6 @@ public class Game extends Form {
             case 'x':
                 myLabel.setText(EXIT_PROMPT);
                 this.exitPrompt = true;
-                break;
-            case 'a':
-                gw.acceleratePlayer();
-                break;
-            case 'b':
-                gw.brakePlayer();
-                break;
-            case 'l':
-                gw.turnPlayerLeft();
-                break;
-            case 'r':
-                gw.turnPlayerRight();
-                break;
-            case '1':
-                gw.handleFlagCollision(1);
-                break;
-            case '2':
-                gw.handleFlagCollision(2);
-                break;
-            case '3':
-                gw.handleFlagCollision(3);
-                break;
-            case '4':
-                gw.handleFlagCollision(4);
-                break;
-            case '5':
-                gw.handleFlagCollision(5);
-                break;
-            case '6':
-                gw.handleFlagCollision(6);
-                break;
-            case '7':
-                gw.handleFlagCollision(7);
-                break;
-            case '8':
-                gw.handleFlagCollision(8);
-                break;
-            case '9':
-                gw.handleFlagCollision(9);
-                break;
-            case 'f':
-                gw.handleFoodCollision();
-                break;
-            case 'g':
-                gw.handleSpiderCollision();
-                break;
-            case 't':
-                gw.tickClock();
                 break;
             case 'd':
                 gw.displayState();

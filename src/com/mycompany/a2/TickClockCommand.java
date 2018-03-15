@@ -5,10 +5,18 @@ import com.codename1.ui.events.ActionEvent;
 
 public class TickClockCommand extends Command {
     private GameWorld gw;
+    private static TickClockCommand command;
 
-    public TickClockCommand(GameWorld gw) {
+    private TickClockCommand(GameWorld gw) {
         super("Tick");
         this.gw = gw;
+    }
+    
+    public static TickClockCommand getCommand(GameWorld gw) {
+    	if (command == null) {
+    		command = new TickClockCommand(gw);
+    	}
+    	return command;
     }
 
     @Override

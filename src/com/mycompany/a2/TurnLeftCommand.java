@@ -5,10 +5,18 @@ import com.codename1.ui.events.ActionEvent;
 
 public class TurnLeftCommand extends Command {
     private GameWorld gw;
+    private static TurnLeftCommand command;
 
-    public TurnLeftCommand(GameWorld gw) {
+    private TurnLeftCommand(GameWorld gw) {
         super("Turn Left");
         this.gw = gw;
+    }
+    
+    public static TurnLeftCommand getCommand(GameWorld gw) {
+    	if (command == null) {
+    		command = new TurnLeftCommand(gw);
+    	}
+    	return command;
     }
 
     @Override

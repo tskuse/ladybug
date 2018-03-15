@@ -5,10 +5,18 @@ import com.codename1.ui.events.ActionEvent;
 
 public class CollideFoodCommand extends Command {
     private GameWorld gw;
+    private static CollideFoodCommand command;
 
-    public CollideFoodCommand(GameWorld gw) {
+    private CollideFoodCommand(GameWorld gw) {
         super("Collide With Food");
         this.gw = gw;
+    }
+    
+    public static CollideFoodCommand getCommand(GameWorld gw) {
+    	if (command == null) {
+    		command = new CollideFoodCommand(gw);
+    	}
+    	return command;
     }
 
     @Override

@@ -5,10 +5,18 @@ import com.codename1.ui.events.ActionEvent;
 
 public class CollideSpiderCommand extends Command {
     private GameWorld gw;
+    private static CollideSpiderCommand command;
 
-    public CollideSpiderCommand(GameWorld gw) {
+    private CollideSpiderCommand(GameWorld gw) {
         super("Collide With Spider");
         this.gw = gw;
+    }
+    
+    public static CollideSpiderCommand getCommand(GameWorld gw) {
+    	if (command == null) {
+    		command = new CollideSpiderCommand(gw);
+    	}
+    	return command;
     }
 
     @Override
