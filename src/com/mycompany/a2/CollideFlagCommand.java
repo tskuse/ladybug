@@ -1,7 +1,11 @@
 package com.mycompany.a2;
 
+import com.codename1.ui.Button;
 import com.codename1.ui.Command;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.layouts.BoxLayout;
 
 public class CollideFlagCommand extends Command {
     private GameWorld gw;
@@ -21,6 +25,15 @@ public class CollideFlagCommand extends Command {
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        gw.handleFlagCollision(1); // TODO fix me
+    	TextField flag = new TextField();
+    	Button okButton = new Button("Ok");
+    	Button cancelButton = new Button("Cancel");
+    	Dialog dialog = new Dialog("Enter a flag:");
+    	dialog.setLayout(new BoxLayout(BoxLayout.X_AXIS));
+    	dialog.add(flag)
+    		  .add(okButton)
+    		  .add(cancelButton);
+    	dialog.show();
+        gw.handleFlagCollision(Integer.parseInt(flag.getText())); // TODO fix me
     }
 }
