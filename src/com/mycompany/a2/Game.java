@@ -14,27 +14,27 @@ import com.codename1.ui.layouts.FlowLayout;
 public class Game extends Form {
     
     private final String COMMAND_PROMPT = "Enter a Command:";
-    private final String EXIT_PROMPT = "Confirm exit (y/n):";
     private final String INVALID_INPUT = "Invalid input.";
 
     private GameWorld gw;
     private MapView mv;
     private ScoreView sv;
 
-    private boolean exitPrompt;
-
     public Game() {
-        this.exitPrompt = false;
-
         gw = new GameWorld();
         mv = new MapView();
         sv = new ScoreView();
 
         gw.init();
-
-        this.setToolbar(new Toolbar());
-        this.getToolbar().setTitle("Ladybug Game");
+        
         this.setLayout(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER));
+
+        Toolbar toolbar = new Toolbar();
+        this.setToolbar(toolbar);
+        toolbar.setTitle("Ladybug Game");
+        toolbar.addCommandToSideMenu(AccelerateCommand.getCommand(gw));
+        toolbar.addCommandToSideMenu(AboutCommand.getCommand());
+        toolbar.addCommandToSideMenu(ExitCommand.getCommand(gw));
         
         final Label myLabel = new Label(COMMAND_PROMPT);
         final TextField myTextField = new TextField();
@@ -65,6 +65,7 @@ public class Game extends Form {
         this.addKeyListener('f', CollideFoodCommand.getCommand(gw));
         this.addKeyListener('g', CollideSpiderCommand.getCommand(gw));
         this.addKeyListener('t', TickClockCommand.getCommand(gw));
+        this.addKeyListener('x', ExitCommand.getCommand(gw));
         
         this.show();
         
@@ -87,18 +88,7 @@ public class Game extends Form {
         char command = myTextField.getText().toString().charAt(0);
         myTextField.clear();
         
-        if (exitPrompt && command == 'y') {
-            gw.exit();
-        } else if (exitPrompt) {
-            this.exitPrompt = false;
-            myLabel.setText(COMMAND_PROMPT);
-        }
-        
         switch (command) {
-            case 'x':
-                myLabel.setText(EXIT_PROMPT);
-                this.exitPrompt = true;
-                break;
             case 'd':
                 gw.displayState();
                 break;
