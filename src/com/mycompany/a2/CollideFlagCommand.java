@@ -1,11 +1,9 @@
 package com.mycompany.a2;
 
-import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.layouts.BoxLayout;
 
 public class CollideFlagCommand extends Command {
     private GameWorld gw;
@@ -25,15 +23,16 @@ public class CollideFlagCommand extends Command {
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-    	TextField flag = new TextField();
-    	Button okButton = new Button("Ok");
-    	Button cancelButton = new Button("Cancel");
-    	Dialog dialog = new Dialog("Enter a flag:");
-    	dialog.setLayout(new BoxLayout(BoxLayout.X_AXIS));
-    	dialog.add(flag)
-    		  .add(okButton)
-    		  .add(cancelButton);
-    	dialog.show();
-        gw.handleFlagCollision(Integer.parseInt(flag.getText())); // TODO fix me
+    	TextField flagField = new TextField();
+    	Command okCommand = new Command("Ok");
+    	Command cancelCommand = new Command("Cancel");
+    	Command responseCommand = Dialog.show("Enter a flag:", flagField, new Command[] {okCommand, cancelCommand});
+        if (responseCommand == okCommand) {
+        	try {
+        		gw.handleFlagCollision(Integer.parseInt(flagField.getText())); // TODO fix me
+        	} catch (NumberFormatException e) {
+        		System.out.println("ERROR parsing flag number");
+        	}
+        }
     }
 }
