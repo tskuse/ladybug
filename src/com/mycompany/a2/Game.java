@@ -27,7 +27,7 @@ public class Game extends Form {
 
         gw.init();
         
-        this.setLayout(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER));
+        this.setLayout(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_SCALE));
 
         Toolbar toolbar = new Toolbar();
         this.setToolbar(toolbar);
