@@ -4,7 +4,6 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Container;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BorderLayout;
-import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.plaf.Border;
 
 import java.util.Observable;
@@ -21,6 +20,6 @@ public class MapView extends Container implements Observer {
 	}
 	
     public void update(Observable observable, Object data) {
-
+    	((GameWorld) observable).displayMap();
     }
 }
