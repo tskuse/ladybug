@@ -108,17 +108,6 @@ public class GameWorld extends Observable {
     }
 
     /**
-     * Displays output of the current game state
-     */
-    public void displayState() {
-        System.out.println("Lives remaining: " + this.livesRemaining);
-        System.out.println("Elapsed time: " + this.clockTime);
-        System.out.println("Highest flag reached: " + player.getLastFlagReached());
-        System.out.println("Food level: " + player.getFoodLevel());
-        System.out.println("Health Level: " + player.getHealthLevel());
-    }
-
-    /**
      * Outputs all objects in the GameWorld
      */
     public void displayMap() {
