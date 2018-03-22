@@ -29,7 +29,8 @@ public class CollideFlagCommand extends Command {
     	Command responseCommand = Dialog.show("Enter a flag:", flagField, new Command[] {okCommand, cancelCommand});
         if (responseCommand == okCommand) {
         	try {
-        		gw.handleFlagCollision(Integer.parseInt(flagField.getText())); // TODO fix me
+        		gw.handleFlagCollision(Integer.parseInt(flagField.getText()));
+        		gw.notifyObservers();
         	} catch (NumberFormatException e) {
         		System.out.println("ERROR parsing flag number");
         	}

@@ -22,5 +22,6 @@ public class TurnLeftCommand extends Command {
     @Override
     public void actionPerformed(ActionEvent evt) {
         gw.turnPlayerLeft();
+        gw.notifyObservers();
     }
 }

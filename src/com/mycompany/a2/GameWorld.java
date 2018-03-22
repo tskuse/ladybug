@@ -52,6 +52,7 @@ public class GameWorld extends Observable {
         objects.add(new FoodStation());
 
         System.out.println("Initialized game world.");
+        setChanged();
     }
 
     /**
@@ -76,6 +77,7 @@ public class GameWorld extends Observable {
     public void acceleratePlayer() {
         System.out.println("Accelerating Ladybug by " + ACCELERATION_QTY);
         player.setSpeed(player.getSpeed() + ACCELERATION_QTY);
+        setChanged();
     }
 
     /**
@@ -84,6 +86,7 @@ public class GameWorld extends Observable {
     public void brakePlayer() {
         System.out.println("Braking Ladybug by " + ACCELERATION_QTY);
         player.setSpeed(player.getSpeed() - ACCELERATION_QTY);
+        setChanged();
     }
 
     /**
@@ -92,6 +95,7 @@ public class GameWorld extends Observable {
     public void turnPlayerLeft() {
         System.out.println("Changing Ladybug heading by -" + TURN_QTY + " degrees");
         player.changeHeading(-TURN_QTY);
+        setChanged();
     }
 
     /**
@@ -100,6 +104,7 @@ public class GameWorld extends Observable {
     public void turnPlayerRight() {
         System.out.println("Changing Ladybug heading by +" + TURN_QTY + " degrees");
         player.changeHeading(TURN_QTY);
+        setChanged();
     }
 
     /**
@@ -132,6 +137,7 @@ public class GameWorld extends Observable {
                 win();
             }
             player.setLastFlagReached(flagReached);
+            setChanged();
         }
     }
 
@@ -155,6 +161,7 @@ public class GameWorld extends Observable {
         
         player.setFoodLevel(player.getFoodLevel() + acquiredFood);
         objects.add(new FoodStation());
+        setChanged();
     }
 
     /**
@@ -167,6 +174,7 @@ public class GameWorld extends Observable {
             System.out.println("Player death");
             init();
         }
+        setChanged();
     }
 
     /**
@@ -188,6 +196,29 @@ public class GameWorld extends Observable {
         }
 
         this.clockTime++;
+        
+        setChanged();
+	}
+
+	/**
+	 * @return the clockTime
+	 */
+	public int getClockTime() {
+		return clockTime;
+	}
+
+	/**
+	 * @return the livesRemaining
+	 */
+	public int getLivesRemaining() {
+		return livesRemaining;
+	}
+
+	/**
+	 * @return the player
+	 */
+	public Ladybug getPlayer() {
+		return player;
 	}
     
 }

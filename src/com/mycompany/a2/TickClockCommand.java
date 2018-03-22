@@ -22,5 +22,6 @@ public class TickClockCommand extends Command {
     @Override
     public void actionPerformed(ActionEvent evt) {
         gw.tickClock();
+        gw.notifyObservers();
     }
 }

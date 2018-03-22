@@ -2,20 +2,13 @@ package com.mycompany.a2;
 
 import com.codename1.ui.Button;
 import com.codename1.ui.Form;
-import com.codename1.ui.Label;
-import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.FlowLayout;
 
 public class Game extends Form {
     
-    private final String COMMAND_PROMPT = "Enter a Command:";
-    private final String INVALID_INPUT = "Invalid input.";
-
     private GameWorld gw;
     private MapView mv;
     private ScoreView sv;
@@ -25,7 +18,10 @@ public class Game extends Form {
         mv = new MapView();
         sv = new ScoreView();
 
+        gw.addObserver(mv);
+        gw.addObserver(sv);
         gw.init();
+        gw.notifyObservers();
         
         this.setLayout(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_SCALE));
 
@@ -35,12 +31,8 @@ public class Game extends Form {
         toolbar.addCommandToSideMenu(AccelerateCommand.getCommand(gw));
         toolbar.addCommandToSideMenu(AboutCommand.getCommand());
         toolbar.addCommandToSideMenu(ExitCommand.getCommand(gw));
-        
-        final Label myLabel = new Label(COMMAND_PROMPT);
-        final TextField myTextField = new TextField();
 
-        this.add(BorderLayout.NORTH,
-                 BoxLayout.encloseY(sv, FlowLayout.encloseCenter(myLabel, myTextField)));
+        this.add(BorderLayout.NORTH, sv);
 
         this.add(BorderLayout.WEST,
                  BoxLayout.encloseY(new Button(AccelerateCommand.getCommand(gw)),
@@ -68,36 +60,6 @@ public class Game extends Form {
         this.addKeyListener('x', ExitCommand.getCommand(gw));
         
         this.show();
-        
-        myTextField.addActionListener(new ActionListener<ActionEvent>() {
-            public void actionPerformed(ActionEvent event) {
-                processInput(myTextField, myLabel);
-            }
-        });
-    }
-    
-    private void processInput(TextField myTextField, Label myLabel) {
-        if (myTextField.getText().length() < 1) {
-            return;
-        } else if (myTextField.getText().length() > 1) {
-            System.out.println(INVALID_INPUT);
-            myTextField.clear();
-            return;
-        }
-        
-        char command = myTextField.getText().toString().charAt(0);
-        myTextField.clear();
-        
-        switch (command) {
-            case 'd':
-                gw.displayState();
-                break;
-            case 'm':
-                gw.displayMap();
-                break;
-            default:
-                System.out.println(INVALID_INPUT);
-        }
     }
 
 }

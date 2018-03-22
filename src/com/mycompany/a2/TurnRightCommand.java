@@ -22,5 +22,6 @@ public class TurnRightCommand extends Command {
     @Override
     public void actionPerformed(ActionEvent evt) {
         gw.turnPlayerRight();
+        gw.notifyObservers();
     }
 }

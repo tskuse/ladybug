@@ -7,18 +7,23 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class ScoreView extends Container implements Observer {
+	private Label timeValue;
+	private Label livesValue;
+	private Label foodValue;
+	private Label healthValue;
+	private Label soundValue;
 	
 	public ScoreView() {
 		Label timeLabel = new Label("Time:");
-		Label timeValue = new Label("0");
+		timeValue = new Label("0");
 		Label livesLabel = new Label("Lives Remaining:");
-		Label livesValue = new Label("0");
+		livesValue = new Label("0");
 		Label foodLabel = new Label("Food Level:");
-		Label foodValue = new Label("0");
+		foodValue = new Label("0");
 		Label healthLabel = new Label("Health Level:");
-		Label healthValue = new Label("0");
+		healthValue = new Label("0");
 		Label soundLabel = new Label("Sound:");
-		Label soundValue = new Label("0");
+		soundValue = new Label("OFF");
 		
 		this.setLayout(new FlowLayout(CENTER));
 		
@@ -35,7 +40,12 @@ public class ScoreView extends Container implements Observer {
 	}
 	
     public void update(Observable observable, Object data) {
-
+    	GameWorld gw = ((GameWorld) observable);
+    	Ladybug player = gw.getPlayer();
+    	timeValue.setText(Integer.toString(gw.getClockTime()));
+    	livesValue.setText(Integer.toString(gw.getLivesRemaining()));
+    	foodValue.setText(Integer.toString(player.getFoodLevel()));
+    	healthValue.setText(Integer.toString(player.getHealthLevel()));
     }
 	
 }

@@ -22,5 +22,6 @@ public class AccelerateCommand extends Command {
     @Override
     public void actionPerformed(ActionEvent evt) {
         gw.acceleratePlayer();
+        gw.notifyObservers();
     }
 }

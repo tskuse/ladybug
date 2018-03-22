@@ -22,5 +22,6 @@ public class CollideSpiderCommand extends Command {
     @Override
     public void actionPerformed(ActionEvent evt) {
         gw.handleSpiderCollision();
+        gw.notifyObservers();
     }
 }

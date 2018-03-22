@@ -22,5 +22,6 @@ public class CollideFoodCommand extends Command {
     @Override
     public void actionPerformed(ActionEvent evt) {
         gw.handleFoodCollision();
+        gw.notifyObservers();
     }
 }

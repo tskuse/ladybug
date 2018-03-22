@@ -12,7 +12,7 @@ import java.util.Observer;
 public class MapView extends Container implements Observer {
 	public MapView() {
 		this.getAllStyles().setBorder(
-				Border.createLineBorder(5, ColorUtil.rgb(255, 0, 0)));
+				Border.createInsetBorder(5, ColorUtil.rgb(255, 0, 0)));
 		this.getAllStyles().setBgColor(ColorUtil.WHITE);
 		this.getAllStyles().setBgTransparency(255);
 		this.setLayout(new BorderLayout(BorderLayout.CENTER_BEHAVIOR_CENTER));
