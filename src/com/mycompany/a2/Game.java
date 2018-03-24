@@ -58,9 +58,9 @@ public class Game extends Form {
         this.addKeyListener('t', TickClockCommand.getCommand(gw));
         this.addKeyListener('x', ExitCommand.getCommand(gw));
         
-        gw.init();
-        gw.notifyObservers();
         this.show();
+        gw.init(mv.getWidth(), mv.getHeight());
+        gw.notifyObservers();
     }
     
     private Button createCommandButton(Command command) {

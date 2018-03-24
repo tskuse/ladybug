@@ -13,36 +13,39 @@ public abstract class Movable extends GameObject {
     private int speed;
 
     /**
+     * @param gw
      * @param color
      */
-    public Movable(int color) {
-        super(color);
+    public Movable(IGameWorld gw, int color) {
+        super(gw, color);
         Random random = new Random();
         this.heading = random.nextInt(HEADING_RANGE);
         this.speed = random.nextInt(MAX_SPEED + 1);
     }
 
     /**
+     * @param gw
      * @param location
      * @param size
      * @param color
      */
-    public Movable(Point2D location, int size, int color) {
-        super(location, size, color);
+    public Movable(IGameWorld gw, Point2D location, int size, int color) {
+        super(gw, location, size, color);
         Random random = new Random();
         this.heading = random.nextInt(HEADING_RANGE);
         this.speed = random.nextInt(MAX_SPEED + 1);
     }
 
     /**
+     * @param gw
      * @param location
      * @param size
      * @param color
      * @param heading
      * @param speed
      */
-    public Movable(Point2D location, int size, int color, int heading, int speed) {
-        super(location, size, color);
+    public Movable(IGameWorld gw, Point2D location, int size, int color, int heading, int speed) {
+        super(gw, location, size, color);
         this.heading = heading % HEADING_RANGE;
         this.speed = speed;
     }

@@ -10,8 +10,8 @@ public class FoodStation extends Fixed {
 
     private int capacity;
 
-    public FoodStation() {
-        super(DEFAULT_COLOR);
+    public FoodStation(IGameWorld gw) {
+        super(gw, DEFAULT_COLOR);
         this.capacity = (int) (this.getSize() * DEFAULT_CAPACITY_RATIO);
     }
 

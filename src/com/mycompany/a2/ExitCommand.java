@@ -5,15 +5,15 @@ import com.codename1.ui.Dialog;
 import com.codename1.ui.events.ActionEvent;
 
 public class ExitCommand extends Command {
-	private GameWorld gw;
+	private IGameWorld gw;
 	private static ExitCommand command;
 	
-	private ExitCommand(GameWorld gw) {
+	private ExitCommand(IGameWorld gw) {
 		super("Exit");
 		this.gw = gw;
 	}
 	
-	public static ExitCommand getCommand(GameWorld gw) {
+	public static ExitCommand getCommand(IGameWorld gw) {
 		if (command == null) {
 			command = new ExitCommand(gw);
 		}

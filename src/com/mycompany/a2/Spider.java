@@ -9,8 +9,8 @@ public class Spider extends Movable implements IUncolorable {
 
     private static final int DEFAULT_COLOR = ColorUtil.BLACK;
 
-    public Spider() {
-        super(DEFAULT_COLOR);
+    public Spider(IGameWorld gw) {
+        super(gw, DEFAULT_COLOR);
     }
     
     @Override
@@ -27,8 +27,8 @@ public class Spider extends Movable implements IUncolorable {
                                        getLocation().getY() + Math.sin(Math.toRadians(90 - getHeading())) * getSpeed());
 
         // ensure Spider cannot move outside play area
-        if (location.getX() > GameObject.LOCATION_MAX_X - (getSize() + 1) / 2
-                || location.getY() > GameObject.LOCATION_MAX_Y - (getSize() + 1) / 2
+        if (location.getX() > getGw().getMaxWidth() - (getSize() + 1) / 2
+                || location.getY() > getGw().getMaxHeight() - (getSize() + 1) / 2
                 || location.getX() < (getSize() + 1) / 2
                 || location.getY() < (getSize() + 1) / 2) {
             setHeading(getHeading() + 180); // https://www.youtube.com/watch?v=lcOxhH8N3Bo

@@ -9,9 +9,7 @@ public abstract class GameObject {
     private static final int MINIMUM_SIZE = 10;
     private static final int MAXIMUM_SIZE = 50;
 
-    public static final double LOCATION_MAX_X = 1024.0;
-    public static final double LOCATION_MAX_Y = 768.0;
-
+    private IGameWorld gw;
     private Point2D location;
     private int size;
     private int color;
@@ -19,10 +17,11 @@ public abstract class GameObject {
     /**
      * @param color
      */
-    public GameObject(int color) {
+    public GameObject(IGameWorld gw, int color) {
+    	this.gw = gw;
         Random random = new Random();
-        this.location = new Point2D(random.nextDouble() * LOCATION_MAX_X,
-                                    random.nextDouble() * LOCATION_MAX_Y);
+        this.location = new Point2D(random.nextDouble() * gw.getMaxWidth(),
+                                    random.nextDouble() * gw.getMaxHeight());
         this.size = random.nextInt(MAXIMUM_SIZE - MINIMUM_SIZE + 1) + MINIMUM_SIZE;
         this.color = color;
     }
@@ -30,10 +29,11 @@ public abstract class GameObject {
     /**
      * @param size
      */
-    public GameObject(int size, int color) {
+    public GameObject(IGameWorld gw, int size, int color) {
+    	this.gw = gw;
         Random random = new Random();
-        this.location = new Point2D(random.nextDouble() * LOCATION_MAX_X,
-                                    random.nextDouble() * LOCATION_MAX_Y);
+        this.location = new Point2D(random.nextDouble() * gw.getMaxWidth(),
+                                    random.nextDouble() * gw.getMaxHeight());
         this.size = size;
         this.color = color;
     }
@@ -42,8 +42,8 @@ public abstract class GameObject {
      * @param location
      * @param size
      */
-    public GameObject(Point2D location, int size, int color) {
-        super();
+    public GameObject(IGameWorld gw, Point2D location, int size, int color) {
+        this.gw = gw;
         this.location = location;
         this.size = size;
         this.color = color;
@@ -60,18 +60,17 @@ public abstract class GameObject {
      * @param location the location to set
      */
     public void setLocation(Point2D location) {
-
         // ensure object edges do not fall outside the max area
-        if (location.getX() > LOCATION_MAX_X - (this.size + 1)/2) {
-            this.location.setX(LOCATION_MAX_X - (this.size + 1)/2);
+        if (location.getX() > getGw().getMaxWidth() - (this.size + 1)/2) {
+            this.location.setX(getGw().getMaxWidth() - (this.size + 1)/2);
         } else if (location.getX() < (this.size + 1)/2) {
             this.location.setX((this.size + 1)/2);
         } else {
             this.location.setX(location.getX());
         }
 
-        if (location.getY() > LOCATION_MAX_Y - (this.size + 1) / 2) {
-            this.location.setY(LOCATION_MAX_Y - (this.size + 1) / 2);
+        if (location.getY() > getGw().getMaxHeight() - (this.size + 1) / 2) {
+            this.location.setY(getGw().getMaxHeight() - (this.size + 1) / 2);
         } else if (location.getY() < (this.size + 1) / 2) {
             this.location.setY((this.size + 1) / 2);
         } else {
@@ -99,5 +98,12 @@ public abstract class GameObject {
     public int getSize() {
         return size;
     }
+
+    /**
+     * @return the GameWorld
+     */
+	public IGameWorld getGw() {
+		return gw;
+	}
 
 }

@@ -4,12 +4,16 @@ import com.codename1.ui.geom.Point2D;
 import java.util.Observable;
 import java.util.Random;
 
-public class GameWorld extends Observable {
+public class GameWorld extends Observable implements IGameWorld {
     
     private final int STARTING_LIVES = 3;
     private final int ACCELERATION_QTY = 5;
     private final int TURN_QTY = 5;
     private final int TOTAL_FLAGS = 4;
+    
+    // sensible defaults
+    private int maxWidth = 1024;
+    private int maxHeight = 768;
     
     private int clockTime;
     private int livesRemaining;
@@ -21,10 +25,19 @@ public class GameWorld extends Observable {
         this.clockTime = 0;
         this.livesRemaining = STARTING_LIVES;
     }
+    
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#init(int, int)
+	 */
+    public void init(int maxWidth, int maxHeight) {
+    	this.maxWidth = maxWidth;
+    	this.maxHeight = maxHeight;
+    	init();
+    }
 
-    /**
-     * Initializes the game world
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#init()
+	 */
     public void init() {	
         if (--this.livesRemaining < 0) {
             System.out.println("Game over, you failed!");
@@ -36,18 +49,19 @@ public class GameWorld extends Observable {
         Random random = new Random();
         for (int i = 0; i < TOTAL_FLAGS; i++) {
             // choosing random locations for flags for now
-            objects.add(new Flag(new Point2D(random.nextDouble() * GameObject.LOCATION_MAX_X,
-                                             random.nextDouble() * GameObject.LOCATION_MAX_Y),
-                                             i + 1));
+            objects.add(new Flag(new GameWorldInfoProxy(this),
+            					 new Point2D(random.nextDouble() * this.getMaxWidth(),
+                                             random.nextDouble() * this.getMaxHeight()),
+                                 i + 1));
         }
         
         // add ladybug at flag 1
-        objects.add(player = new Ladybug(objects.getIterator().getNext().getLocation(), 30, 30, 5));
+        objects.add(player = new Ladybug(new GameWorldInfoProxy(this), objects.getIterator().getNext().getLocation(), 30, 30, 5));
       
-        objects.add(new Spider());
-        objects.add(new Spider());
-        objects.add(new FoodStation());
-        objects.add(new FoodStation());
+        objects.add(new Spider(new GameWorldInfoProxy(this)));
+        objects.add(new Spider(new GameWorldInfoProxy(this)));
+        objects.add(new FoodStation(new GameWorldInfoProxy(this)));
+        objects.add(new FoodStation(new GameWorldInfoProxy(this)));
 
         System.out.println("Initialized game world.");
         
@@ -62,53 +76,53 @@ public class GameWorld extends Observable {
         exit();
     }
     
-    /**
-     * Exits the game
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#exit()
+	 */
     public void exit() {
         System.out.println("Exiting..");
         System.exit(0);
     }
 
-    /**
-     * Accelerates the player object
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#acceleratePlayer()
+	 */
     public void acceleratePlayer() {
         System.out.println("Accelerating Ladybug by " + ACCELERATION_QTY);
         player.setSpeed(player.getSpeed() + ACCELERATION_QTY);
         setChanged();
     }
 
-    /**
-     * Brakes the player object
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#brakePlayer()
+	 */
     public void brakePlayer() {
         System.out.println("Braking Ladybug by " + ACCELERATION_QTY);
         player.setSpeed(player.getSpeed() - ACCELERATION_QTY);
         setChanged();
     }
 
-    /**
-     * Adjusts the player object's heading left by TURN_QTY
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#turnPlayerLeft()
+	 */
     public void turnPlayerLeft() {
         System.out.println("Changing Ladybug heading by -" + TURN_QTY + " degrees");
         player.changeHeading(-TURN_QTY);
         setChanged();
     }
 
-    /**
-     * Adjusts the player object's heading right by TURN QTY
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#turnPlayerRight()
+	 */
     public void turnPlayerRight() {
         System.out.println("Changing Ladybug heading by +" + TURN_QTY + " degrees");
         player.changeHeading(TURN_QTY);
         setChanged();
     }
 
-    /**
-     * Outputs all objects in the GameWorld
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#displayMap()
+	 */
     public void displayMap() {
         IIterator<GameObject> it = objects.getIterator();
         while (it.hasNext()) {
@@ -116,9 +130,9 @@ public class GameWorld extends Observable {
         }
     }
 
-    /**
-     * Handles player object colliding with a Flag
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#handleFlagCollision(int)
+	 */
     public void handleFlagCollision(int flagReached) {
         System.out.println("Flag collision with Flag #" + flagReached);
         if (player.getLastFlagReached() == flagReached - 1) {
@@ -130,9 +144,9 @@ public class GameWorld extends Observable {
         }
     }
 
-    /**
-     * Handles the player object colliding with a FoodStation
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#handleFoodCollision()
+	 */
 	public void handleFoodCollision() {
         FoodStation foodStation;
         int acquiredFood = 0;
@@ -151,13 +165,13 @@ public class GameWorld extends Observable {
         }
         
         player.setFoodLevel(player.getFoodLevel() + acquiredFood);
-        objects.add(new FoodStation());
+        objects.add(new FoodStation(new GameWorldInfoProxy(this)));
         setChanged();
     }
 
-    /**
-     * Handles the player object colliding with a Spider
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#handleSpiderCollision()
+	 */
     public void handleSpiderCollision() {
         System.out.println("SIMULATING collision with a Spider");
         player.decreaseHealth();
@@ -168,9 +182,9 @@ public class GameWorld extends Observable {
         setChanged();
     }
 
-    /**
-     * Updates object states and advances the game clock
-     */
+    /* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#tickClock()
+	 */
 	public void tickClock() {
         System.out.println("Ticking game clock...");
         
@@ -193,25 +207,39 @@ public class GameWorld extends Observable {
         setChanged();
 	}
 
-	/**
-	 * @return the clockTime
+	/* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#getClockTime()
 	 */
 	public int getClockTime() {
 		return clockTime;
 	}
 
-	/**
-	 * @return the livesRemaining
+	/* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#getLivesRemaining()
 	 */
 	public int getLivesRemaining() {
 		return livesRemaining;
 	}
 
-	/**
-	 * @return the player
+	/* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#getPlayer()
 	 */
 	public Ladybug getPlayer() {
 		return player;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#getMaxWidth()
+	 */
+	public int getMaxWidth() {
+		return maxWidth;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#getMaxHeight()
+	 */
+	public int getMaxHeight() {
+		return maxHeight;
 	}
     
 }

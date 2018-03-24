@@ -20,6 +20,6 @@ public class MapView extends Container implements Observer {
 	}
 	
     public void update(Observable observable, Object data) {
-    	((GameWorld) observable).displayMap();
+    	((IGameWorld) observable).displayMap();
     }
 }

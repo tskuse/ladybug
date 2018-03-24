@@ -7,16 +7,16 @@ public abstract class Fixed extends GameObject {
     /**
      * @param color
      */
-    public Fixed(int color) {
-        super(color);
+    public Fixed(IGameWorld gw, int color) {
+        super(gw, color);
     }
 
     /**
      * @param size
      * @param color
      */
-    public Fixed(int size, int color) {
-        super(size, color);
+    public Fixed(IGameWorld gw, int size, int color) {
+        super(gw, size, color);
     }
 
     /**

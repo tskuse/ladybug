@@ -40,7 +40,7 @@ public class ScoreView extends Container implements Observer {
 	}
 	
     public void update(Observable observable, Object data) {
-    	GameWorld gw = ((GameWorld) observable);
+    	IGameWorld gw = ((IGameWorld) observable);
     	Ladybug player = gw.getPlayer();
     	timeValue.setText(Integer.toString(gw.getClockTime()));
     	livesValue.setText(Integer.toString(gw.getLivesRemaining()));

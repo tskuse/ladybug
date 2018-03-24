@@ -25,8 +25,8 @@ public class Ladybug extends Movable implements ISteerable {
      * @param foodLevel
      * @param foodConsumptionRate
      */
-    public Ladybug(Point2D location, int maximumSpeed, int foodLevel, int foodConsumptionRate) {
-        super(location, DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_HEADING, DEFAULT_SPEED);
+    public Ladybug(IGameWorld gw, Point2D location, int maximumSpeed, int foodLevel, int foodConsumptionRate) {
+        super(gw, location, DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_HEADING, DEFAULT_SPEED);
         this.maximumSpeed = maximumSpeed;
         this.foodLevel = foodLevel;
         this.foodConsumptionRate = foodConsumptionRate;
