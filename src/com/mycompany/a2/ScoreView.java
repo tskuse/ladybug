@@ -46,6 +46,7 @@ public class ScoreView extends Container implements Observer {
     	livesValue.setText(Integer.toString(gw.getLivesRemaining()));
     	foodValue.setText(Integer.toString(player.getFoodLevel()));
     	healthValue.setText(Integer.toString(player.getHealthLevel()));
+    	this.revalidate();    	
     }
 	
 }

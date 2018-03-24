@@ -25,7 +25,7 @@ public class GameWorld extends Observable {
     /**
      * Initializes the game world
      */
-    public void init() {
+    public void init() {	
         if (--this.livesRemaining < 0) {
             System.out.println("Game over, you failed!");
             exit();
