@@ -3,7 +3,6 @@ package com.mycompany.a2;
 import com.codename1.ui.geom.Point2D;
 import java.util.Observable;
 import java.util.Random;
-import java.util.Vector;
 
 public class GameWorld extends Observable {
     
@@ -16,7 +15,7 @@ public class GameWorld extends Observable {
     private int livesRemaining;
 
     private Ladybug player;
-    private Vector<GameObject> objects;
+    private GameObjectCollection<GameObject> objects;
 
     public GameWorld() {
         this.clockTime = 0;
@@ -32,7 +31,7 @@ public class GameWorld extends Observable {
             exit();
         }
 
-        this.objects = new Vector<GameObject>();
+        this.objects = new GameObjectCollection<GameObject>();
         
         Random random = new Random();
         for (int i = 0; i < TOTAL_FLAGS; i++) {
@@ -43,15 +42,15 @@ public class GameWorld extends Observable {
         }
         
         // add ladybug at flag 1
-        objects.add(player = new Ladybug(objects.get(0).getLocation(), 30, 30, 5));
+        objects.add(player = new Ladybug(objects.getIterator().getNext().getLocation(), 30, 30, 5));
       
         objects.add(new Spider());
         objects.add(new Spider());
-        
         objects.add(new FoodStation());
         objects.add(new FoodStation());
 
         System.out.println("Initialized game world.");
+        
         setChanged();
     }
 
@@ -111,8 +110,9 @@ public class GameWorld extends Observable {
      * Outputs all objects in the GameWorld
      */
     public void displayMap() {
-        for(GameObject object : objects) {
-            System.out.println(object);
+        IIterator<GameObject> it = objects.getIterator();
+        while (it.hasNext()) {
+        	System.out.println(it.getNext());
         }
     }
 
@@ -136,9 +136,11 @@ public class GameWorld extends Observable {
 	public void handleFoodCollision() {
         FoodStation foodStation;
         int acquiredFood = 0;
-
-        for (GameObject object : objects) {
-            if (object instanceof FoodStation) {
+        
+        IIterator<GameObject> it = objects.getIterator();
+        while (it.hasNext()) {
+        	GameObject object = it.getNext();
+        	if (object instanceof FoodStation) {
                 foodStation = (FoodStation) object;
                 acquiredFood = foodStation.deplete();
                 if (acquiredFood > 0) {
@@ -171,9 +173,11 @@ public class GameWorld extends Observable {
      */
 	public void tickClock() {
         System.out.println("Ticking game clock...");
-
-        for (GameObject object : objects) {
-            if (object instanceof Movable) {
+        
+        IIterator<GameObject> it = objects.getIterator();
+        while (it.hasNext()) {
+        	GameObject object = it.getNext();
+        	if (object instanceof Movable) {
                 Movable movable = (Movable) object;
                 movable.move();
             }
