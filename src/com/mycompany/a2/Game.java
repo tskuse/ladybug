@@ -26,6 +26,7 @@ public class Game extends Form {
         toolbar.addCommandToSideMenu(AccelerateCommand.getCommand(gw));
         toolbar.addCommandToSideMenu(AboutCommand.getCommand());
         toolbar.addCommandToSideMenu(ExitCommand.getCommand(gw));
+        toolbar.addCommandToRightBar(HelpCommand.getCommand());
 
         sv = new ScoreView();
         this.add(BorderLayout.NORTH, sv);
