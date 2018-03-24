@@ -1,6 +1,5 @@
 package com.mycompany.a2;
 
-import com.codename1.ui.Button;
 import com.codename1.ui.Form;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BoxLayout;
