@@ -35,20 +35,20 @@ public class Game extends Form {
         this.add(BorderLayout.NORTH, sv);
 
         this.add(BorderLayout.WEST,
-                 BoxLayout.encloseY(new Button(AccelerateCommand.getCommand(gw)),
-                                    new Button(TurnLeftCommand.getCommand(gw))));
+                 BoxLayout.encloseY(new CommandButton(AccelerateCommand.getCommand(gw)),
+                                    new CommandButton(TurnLeftCommand.getCommand(gw))));
 
         this.add(BorderLayout.CENTER, mv);
         
         this.add(BorderLayout.EAST,
-                 BoxLayout.encloseY(new Button(BrakeCommand.getCommand(gw)),
-                                    new Button(TurnRightCommand.getCommand(gw))));
+                 BoxLayout.encloseY(new CommandButton(BrakeCommand.getCommand(gw)),
+                                    new CommandButton(TurnRightCommand.getCommand(gw))));
 
         this.add(BorderLayout.SOUTH,
-                 FlowLayout.encloseCenter(new Button(CollideFlagCommand.getCommand(gw)),
-                                          new Button(CollideSpiderCommand.getCommand(gw)),
-                                          new Button(CollideFoodCommand.getCommand(gw)),
-                                          new Button(TickClockCommand.getCommand(gw))));        
+                 FlowLayout.encloseCenter(new CommandButton(CollideFlagCommand.getCommand(gw)),
+                                          new CommandButton(CollideSpiderCommand.getCommand(gw)),
+                                          new CommandButton(CollideFoodCommand.getCommand(gw)),
+                                          new CommandButton(TickClockCommand.getCommand(gw))));        
 
         this.addKeyListener('a', AccelerateCommand.getCommand(gw));
         this.addKeyListener('b', BrakeCommand.getCommand(gw));
