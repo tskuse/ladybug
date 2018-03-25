@@ -59,7 +59,8 @@ public class GameWorld extends Observable implements IGameWorld {
         }
         
         // add ladybug at flag 1
-        objects.add(player = new Ladybug(new GameWorldInfoProxy(this), objects.getIterator().getNext().getLocation(), 30, 30, 5));
+        objects.add(player = Ladybug.getLadybug(new GameWorldInfoProxy(this),
+                                                objects.getIterator().getNext().getLocation()));
       
         objects.add(new Spider(new GameWorldInfoProxy(this)));
         objects.add(new Spider(new GameWorldInfoProxy(this)));
@@ -180,6 +181,7 @@ public class GameWorld extends Observable implements IGameWorld {
         player.decreaseHealth();
         if (player.getHealthLevel() == 0) {
             System.out.println("Player death");
+            player.reset();
             init();
         }
         setChanged();
@@ -202,6 +204,7 @@ public class GameWorld extends Observable implements IGameWorld {
 
         player.reduceFood();
         if (player.getFoodLevel() == 0) {
+            player.reset();
             init();
         }
 
@@ -258,6 +261,6 @@ public class GameWorld extends Observable implements IGameWorld {
 	public void setSoundEnabled(boolean soundEnabled) {
 		this.soundEnabled = soundEnabled;
 		setChanged();
-	}
+    }
     
 }

@@ -5,11 +5,16 @@ import com.codename1.ui.geom.Point2D;
 
 public class Ladybug extends Movable implements ISteerable {
 
+    private static Ladybug ladybug;
+
     private static final int DEFAULT_SIZE = 40;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(255, 0, 0);
     private static final int COLOR_MODIFIER = ColorUtil.rgb(0, 20, 20);
     private static final int DEFAULT_HEADING = 0;
     private static final int DEFAULT_SPEED = 10;
+    private static final int DEFAULT_MAX_SPEED = 30;
+    private static final int DEFAULT_FOOD_LEVEL = 30;
+    private static final int DEFAULT_FOOD_CONSUMPTION_RATE = 5;
     private static final int DEFAULT_HEALTH = 10;
     private static final int DEFAULT_LAST_FLAG = 1;
 
@@ -18,6 +23,13 @@ public class Ladybug extends Movable implements ISteerable {
     private int foodConsumptionRate;
     private int healthLevel;
     private int lastFlagReached;
+
+    public static Ladybug getLadybug(IGameWorld gw, Point2D location) {
+        if (ladybug == null) {
+            ladybug = new Ladybug(gw, location);
+        }
+        return ladybug;
+    }
     
     /**
      * @param location
@@ -25,13 +37,21 @@ public class Ladybug extends Movable implements ISteerable {
      * @param foodLevel
      * @param foodConsumptionRate
      */
-    public Ladybug(IGameWorld gw, Point2D location, int maximumSpeed, int foodLevel, int foodConsumptionRate) {
+    private Ladybug(IGameWorld gw, Point2D location) {
         super(gw, location, DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_HEADING, DEFAULT_SPEED);
-        this.maximumSpeed = maximumSpeed;
-        this.foodLevel = foodLevel;
-        this.foodConsumptionRate = foodConsumptionRate;
+        this.maximumSpeed = DEFAULT_MAX_SPEED;
+        this.foodLevel = DEFAULT_FOOD_LEVEL;
+        this.foodConsumptionRate = DEFAULT_FOOD_CONSUMPTION_RATE;
         this.healthLevel = DEFAULT_HEALTH;
         this.lastFlagReached = DEFAULT_LAST_FLAG;
+    }
+
+    /**
+     * Reset the player
+     */
+    public void reset() {
+        setFoodLevel(DEFAULT_FOOD_LEVEL);
+        setHealthLevel(DEFAULT_HEALTH);
     }
 
     /**
@@ -74,6 +94,13 @@ public class Ladybug extends Movable implements ISteerable {
      */
     public int getHealthLevel() {
         return healthLevel;
+    }
+
+    /**
+     * @param healthLevel the healthLevel to set
+     */
+    public void setHealthLevel(int healthLevel) {
+        this.healthLevel = healthLevel;
     }
 
     /**
