@@ -57,11 +57,11 @@ public class GameWorldInfoProxy implements IGameWorld {
 	}
 
 	public int getClockTime() {
-		return -1;
+		return realGameWorld.getClockTime();
 	}
 
 	public int getLivesRemaining() {
-		return -1;
+		return realGameWorld.getLivesRemaining();
 	}
 
 	public Ladybug getPlayer() {
@@ -74,6 +74,14 @@ public class GameWorldInfoProxy implements IGameWorld {
 
 	public int getMaxHeight() {
 		return realGameWorld.getMaxHeight();
+	}
+
+	public boolean isSoundEnabled() {
+		return realGameWorld.isSoundEnabled();
+	}
+
+	public void setSoundEnabled(boolean soundEnabled) {
+		return;
 	}
 
 }

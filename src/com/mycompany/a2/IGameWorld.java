@@ -88,5 +88,15 @@ public interface IGameWorld {
 	 * @return the maxHeight
 	 */
 	int getMaxHeight();
+	
+	/**
+	 * @return the soundEnabled
+	 */
+	public boolean isSoundEnabled();
+
+	/**
+	 * @param soundEnabled the soundEnabled to set
+	 */
+	public void setSoundEnabled(boolean soundEnabled);
 
 }

@@ -10,13 +10,12 @@ public class GameWorld extends Observable implements IGameWorld {
     private final int ACCELERATION_QTY = 5;
     private final int TURN_QTY = 5;
     private final int TOTAL_FLAGS = 4;
-    
-    // sensible defaults
-    private int maxWidth = 1024;
-    private int maxHeight = 768;
-    
+
     private int clockTime;
     private int livesRemaining;
+    private boolean soundEnabled;
+    private int maxWidth;
+    private int maxHeight;
 
     private Ladybug player;
     private GameObjectCollection<GameObject> objects;
@@ -24,6 +23,10 @@ public class GameWorld extends Observable implements IGameWorld {
     public GameWorld() {
         this.clockTime = 0;
         this.livesRemaining = STARTING_LIVES;
+        this.soundEnabled = false;
+        // establish sensible defaults for map size until Map is created
+        this.maxWidth = 1024;
+        this.maxHeight = 768;
     }
     
     /* (non-Javadoc)
@@ -240,6 +243,21 @@ public class GameWorld extends Observable implements IGameWorld {
 	 */
 	public int getMaxHeight() {
 		return maxHeight;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#isSoundEnabled()
+	 */
+	public boolean isSoundEnabled() {
+		return soundEnabled;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mycompany.a2.IGameWorld#setSoundEnabled()
+	 */
+	public void setSoundEnabled(boolean soundEnabled) {
+		this.soundEnabled = soundEnabled;
+		setChanged();
 	}
     
 }

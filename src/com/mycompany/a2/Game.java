@@ -2,6 +2,7 @@ package com.mycompany.a2;
 
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Button;
+import com.codename1.ui.CheckBox;
 import com.codename1.ui.Command;
 import com.codename1.ui.Form;
 import com.codename1.ui.Toolbar;
@@ -23,9 +24,18 @@ public class Game extends Form {
         Toolbar toolbar = new Toolbar();
         this.setToolbar(toolbar);
         toolbar.setTitle("Ladybug Game");
+        
         toolbar.addCommandToSideMenu(AccelerateCommand.getCommand(gw));
+        
+        CheckBox soundCheckBox = new CheckBox("Toggle Sound");
+        soundCheckBox.getAllStyles().setBgTransparency(255);
+        soundCheckBox.getAllStyles().setBgColor(ColorUtil.LTGRAY);
+        soundCheckBox.setSelected(gw.isSoundEnabled());
+        toolbar.addComponentToSideMenu(soundCheckBox, ToggleSoundCommand.getCommand(gw, soundCheckBox));
+        
         toolbar.addCommandToSideMenu(AboutCommand.getCommand());
         toolbar.addCommandToSideMenu(ExitCommand.getCommand(gw));
+        
         toolbar.addCommandToRightBar(HelpCommand.getCommand());
 
         sv = new ScoreView();
