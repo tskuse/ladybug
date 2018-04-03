@@ -7,87 +7,87 @@ public interface IGameWorld {
 	 * @param maxWidth max width of the map container
 	 * @param maxHeight max height of the map container
 	 */
-	void init(int maxWidth, int maxHeight);
+	public void init(int maxWidth, int maxHeight);
 
 	/**
 	 * Initializes the game world
 	 */
-	void init();
+	public void init();
 
 	/**
 	 * Exits the game
 	 */
-	void exit();
+	public void exit();
 
 	/**
 	 * Accelerates the player object
 	 */
-	void acceleratePlayer();
+	public void acceleratePlayer();
 
 	/**
 	 * Brakes the player object
 	 */
-	void brakePlayer();
+	public void brakePlayer();
 
 	/**
 	 * Adjusts the player object's heading left by TURN_QTY
 	 */
-	void turnPlayerLeft();
+	public void turnPlayerLeft();
 
 	/**
 	 * Adjusts the player object's heading right by TURN QTY
 	 */
-	void turnPlayerRight();
+	public void turnPlayerRight();
 
 	/**
 	 * Outputs all objects in the GameWorld
 	 */
-	void displayMap();
+	public void displayMap();
 
 	/**
 	 * Handles player object colliding with a Flag
 	 */
-	void handleFlagCollision(int flagReached);
+	public void handleFlagCollision(int flagReached);
 
 	/**
 	 * Handles the player object colliding with a FoodStation
 	 */
-	void handleFoodCollision();
+	public void handleFoodCollision();
 
 	/**
 	 * Handles the player object colliding with a Spider
 	 */
-	void handleSpiderCollision();
+	public void handleSpiderCollision();
 
 	/**
 	 * Updates object states and advances the game clock
 	 */
-	void tickClock();
+	public void tickClock();
 
 	/**
 	 * @return the clockTime
 	 */
-	int getClockTime();
+	public int getClockTime();
 
 	/**
 	 * @return the livesRemaining
 	 */
-	int getLivesRemaining();
+	public int getLivesRemaining();
 
 	/**
 	 * @return the player
 	 */
-	Ladybug getPlayer();
+	public Ladybug getPlayer();
 
 	/**
 	 * @return the maxWidth
 	 */
-	int getMaxWidth();
+	public int getMaxWidth();
 
 	/**
 	 * @return the maxHeight
 	 */
-	int getMaxHeight();
+	public int getMaxHeight();
 	
 	/**
 	 * @return the soundEnabled
