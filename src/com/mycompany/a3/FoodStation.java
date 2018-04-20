@@ -1,8 +1,10 @@
 package com.mycompany.a3;
 
 import com.codename1.charts.util.ColorUtil;
+import com.codename1.ui.Graphics;
+import com.codename1.ui.geom.Point2D;
 
-public class FoodStation extends Fixed {
+public class FoodStation extends Fixed implements IDrawable {
 
     private static final double DEFAULT_CAPACITY_RATIO = 0.8;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(0, 255, 0);
@@ -46,5 +48,17 @@ public class FoodStation extends Fixed {
                 + ColorUtil.red(getColor()) + "," + ColorUtil.green(getColor()) + ","
                 + ColorUtil.blue(getColor()) + "] capacity=" + capacity + " size=" + getSize();
     }
+
+	public void draw(Graphics g, Point2D pCmpRelPrnt) {
+        g.setColor(getColor());
+        g.fillRect((int) (getLocation().getX() + pCmpRelPrnt.getX()),
+                   (int) (getLocation().getY() + pCmpRelPrnt.getY()),
+                   getSize(),
+                   getSize());
+        g.setColor(ColorUtil.BLACK);
+        g.drawStringBaseline(Integer.toString(capacity),
+                             (int) (getLocation().getX() + pCmpRelPrnt.getX() + getSize() / 4),
+                             (int) (getLocation().getY() + pCmpRelPrnt.getY() + getSize() / 2));
+	}
 
 }

@@ -6,8 +6,8 @@ import com.codename1.ui.geom.Point2D;
 
 public abstract class GameObject {
     
-    private static final int MINIMUM_SIZE = 10;
-    private static final int MAXIMUM_SIZE = 50;
+    private static final int MINIMUM_SIZE = 50;
+    private static final int MAXIMUM_SIZE = 100;
 
     private IGameWorld gw;
     private Point2D location;
