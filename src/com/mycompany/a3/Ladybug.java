@@ -1,13 +1,14 @@
 package com.mycompany.a3;
 
 import com.codename1.charts.util.ColorUtil;
+import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point2D;
 
-public class Ladybug extends Movable implements ISteerable {
+public class Ladybug extends Movable implements IDrawable, ISteerable {
 
     private static Ladybug ladybug;
 
-    private static final int DEFAULT_SIZE = 40;
+    private static final int DEFAULT_SIZE = 60;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(255, 0, 0);
     private static final int COLOR_MODIFIER = ColorUtil.rgb(0, 20, 20);
     private static final int DEFAULT_HEADING = 0;
@@ -160,5 +161,16 @@ public class Ladybug extends Movable implements ISteerable {
                 + " speed=" + getSpeed() + " size=" + getSize() + " maxSpeed="
                 + maximumSpeed + " foodConsumptionRate=" + foodConsumptionRate;
     }
+
+    public void draw(Graphics g, Point2D pCmpRelPrnt) {
+        int localX = (int) (pCmpRelPrnt.getX() + getLocation().getX());
+        int localY = (int) (pCmpRelPrnt.getY() + getLocation().getY());
+        g.setColor(getColor());
+        g.fillArc(localX - (getSize() + 1) / 2,
+                  localY - (getSize() + 1) / 2,
+                  getSize(),
+                  getSize(),
+                  0, 360);
+	}
 
 }
