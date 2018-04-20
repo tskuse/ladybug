@@ -13,10 +13,10 @@ public class TickClockCommand extends Command {
     }
     
     public static TickClockCommand getCommand(GameWorld gw) {
-    	if (command == null) {
-    		command = new TickClockCommand(gw);
-    	}
-    	return command;
+        if (command == null) {
+            command = new TickClockCommand(gw);
+        }
+        return command;
     }
 
     @Override

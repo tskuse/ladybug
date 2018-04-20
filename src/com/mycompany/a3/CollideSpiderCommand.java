@@ -13,10 +13,10 @@ public class CollideSpiderCommand extends Command {
     }
     
     public static CollideSpiderCommand getCommand(GameWorld gw) {
-    	if (command == null) {
-    		command = new CollideSpiderCommand(gw);
-    	}
-    	return command;
+        if (command == null) {
+            command = new CollideSpiderCommand(gw);
+        }
+        return command;
     }
 
     @Override

@@ -13,10 +13,10 @@ public class BrakeCommand extends Command {
     }
     
     public static BrakeCommand getCommand(GameWorld gw) {
-    	if (command == null) {
-    		command = new BrakeCommand(gw);
-    	}
-    	return command;
+        if (command == null) {
+            command = new BrakeCommand(gw);
+        }
+        return command;
     }
 
     @Override

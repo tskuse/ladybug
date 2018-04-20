@@ -30,17 +30,17 @@ public class GameWorld extends Observable implements IGameWorld {
     }
     
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#init(int, int)
-	 */
+     * @see com.mycompany.a3.IGameWorld#init(int, int)
+     */
     public void init(int maxWidth, int maxHeight) {
-    	this.maxWidth = maxWidth;
-    	this.maxHeight = maxHeight;
-    	init();
+        this.maxWidth = maxWidth;
+        this.maxHeight = maxHeight;
+        init();
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#init()
-	 */
+     * @see com.mycompany.a3.IGameWorld#init()
+     */
     public void init() {	
         if (--this.livesRemaining < 0) {
             System.out.println("Game over, you failed!");
@@ -53,7 +53,7 @@ public class GameWorld extends Observable implements IGameWorld {
         for (int i = 0; i < TOTAL_FLAGS; i++) {
             // choosing random locations for flags for now
             objects.add(new Flag(new GameWorldInfoProxy(this),
-            					 new Point2D(random.nextDouble() * this.getMaxWidth(),
+                                 new Point2D(random.nextDouble() * this.getMaxWidth(),
                                              random.nextDouble() * this.getMaxHeight()),
                                  i + 1));
         }
@@ -82,16 +82,16 @@ public class GameWorld extends Observable implements IGameWorld {
     }
     
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#exit()
-	 */
+     * @see com.mycompany.a3.IGameWorld#exit()
+     */
     public void exit() {
         System.out.println("Exiting..");
         System.exit(0);
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#acceleratePlayer()
-	 */
+     * @see com.mycompany.a3.IGameWorld#acceleratePlayer()
+     */
     public void acceleratePlayer() {
         System.out.println("Accelerating Ladybug by " + ACCELERATION_QTY);
         player.setSpeed(player.getSpeed() + ACCELERATION_QTY);
@@ -99,8 +99,8 @@ public class GameWorld extends Observable implements IGameWorld {
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#brakePlayer()
-	 */
+     * @see com.mycompany.a3.IGameWorld#brakePlayer()
+     */
     public void brakePlayer() {
         System.out.println("Braking Ladybug by " + ACCELERATION_QTY);
         player.setSpeed(player.getSpeed() - ACCELERATION_QTY);
@@ -108,8 +108,8 @@ public class GameWorld extends Observable implements IGameWorld {
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#turnPlayerLeft()
-	 */
+     * @see com.mycompany.a3.IGameWorld#turnPlayerLeft()
+     */
     public void turnPlayerLeft() {
         System.out.println("Changing Ladybug heading by -" + TURN_QTY + " degrees");
         player.changeHeading(-TURN_QTY);
@@ -117,8 +117,8 @@ public class GameWorld extends Observable implements IGameWorld {
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#turnPlayerRight()
-	 */
+     * @see com.mycompany.a3.IGameWorld#turnPlayerRight()
+     */
     public void turnPlayerRight() {
         System.out.println("Changing Ladybug heading by +" + TURN_QTY + " degrees");
         player.changeHeading(TURN_QTY);
@@ -126,18 +126,18 @@ public class GameWorld extends Observable implements IGameWorld {
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#displayMap()
-	 */
+     * @see com.mycompany.a3.IGameWorld#displayMap()
+     */
     public void displayMap() {
         IIterator<GameObject> it = objects.getIterator();
         while (it.hasNext()) {
-        	System.out.println(it.getNext());
+            System.out.println(it.getNext());
         }
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#handleFlagCollision(int)
-	 */
+     * @see com.mycompany.a3.IGameWorld#handleFlagCollision(int)
+     */
     public void handleFlagCollision(int flagReached) {
         System.out.println("Flag collision with Flag #" + flagReached);
         if (player.getLastFlagReached() == flagReached - 1) {
@@ -150,16 +150,16 @@ public class GameWorld extends Observable implements IGameWorld {
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#handleFoodCollision()
-	 */
-	public void handleFoodCollision() {
+     * @see com.mycompany.a3.IGameWorld#handleFoodCollision()
+     */
+    public void handleFoodCollision() {
         FoodStation foodStation;
         int acquiredFood = 0;
         
         IIterator<GameObject> it = objects.getIterator();
         while (it.hasNext()) {
-        	GameObject object = it.getNext();
-        	if (object instanceof FoodStation) {
+            GameObject object = it.getNext();
+            if (object instanceof FoodStation) {
                 foodStation = (FoodStation) object;
                 acquiredFood = foodStation.deplete();
                 if (acquiredFood > 0) {
@@ -175,8 +175,8 @@ public class GameWorld extends Observable implements IGameWorld {
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#handleSpiderCollision()
-	 */
+     * @see com.mycompany.a3.IGameWorld#handleSpiderCollision()
+     */
     public void handleSpiderCollision() {
         System.out.println("SIMULATING collision with a Spider");
         player.decreaseHealth();
@@ -189,15 +189,15 @@ public class GameWorld extends Observable implements IGameWorld {
     }
 
     /* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#tickClock()
-	 */
-	public void tickClock() {
+     * @see com.mycompany.a3.IGameWorld#tickClock()
+     */
+    public void tickClock() {
         System.out.println("Ticking game clock...");
         
         IIterator<GameObject> it = objects.getIterator();
         while (it.hasNext()) {
-        	GameObject object = it.getNext();
-        	if (object instanceof Movable) {
+            GameObject object = it.getNext();
+            if (object instanceof Movable) {
                 Movable movable = (Movable) object;
                 movable.move();
             }
@@ -212,56 +212,56 @@ public class GameWorld extends Observable implements IGameWorld {
         this.clockTime++;
         
         setChanged();
-	}
+    }
 
-	/* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#getClockTime()
-	 */
-	public int getClockTime() {
-		return clockTime;
-	}
+    /* (non-Javadoc)
+     * @see com.mycompany.a3.IGameWorld#getClockTime()
+     */
+    public int getClockTime() {
+        return clockTime;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#getLivesRemaining()
-	 */
-	public int getLivesRemaining() {
-		return livesRemaining;
-	}
+    /* (non-Javadoc)
+     * @see com.mycompany.a3.IGameWorld#getLivesRemaining()
+     */
+    public int getLivesRemaining() {
+        return livesRemaining;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#getPlayer()
-	 */
-	public Ladybug getPlayer() {
-		return player;
-	}
+    /* (non-Javadoc)
+     * @see com.mycompany.a3.IGameWorld#getPlayer()
+     */
+    public Ladybug getPlayer() {
+        return player;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#getMaxWidth()
-	 */
-	public int getMaxWidth() {
-		return maxWidth;
-	}
+    /* (non-Javadoc)
+     * @see com.mycompany.a3.IGameWorld#getMaxWidth()
+     */
+    public int getMaxWidth() {
+        return maxWidth;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#getMaxHeight()
-	 */
-	public int getMaxHeight() {
-		return maxHeight;
-	}
+    /* (non-Javadoc)
+     * @see com.mycompany.a3.IGameWorld#getMaxHeight()
+     */
+    public int getMaxHeight() {
+        return maxHeight;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#isSoundEnabled()
-	 */
-	public boolean isSoundEnabled() {
-		return soundEnabled;
-	}
+    /* (non-Javadoc)
+     * @see com.mycompany.a3.IGameWorld#isSoundEnabled()
+     */
+    public boolean isSoundEnabled() {
+        return soundEnabled;
+    }
 
-	/* (non-Javadoc)
-	 * @see com.mycompany.a3.IGameWorld#setSoundEnabled()
-	 */
-	public void setSoundEnabled(boolean soundEnabled) {
-		this.soundEnabled = soundEnabled;
-		setChanged();
+    /* (non-Javadoc)
+     * @see com.mycompany.a3.IGameWorld#setSoundEnabled()
+     */
+    public void setSoundEnabled(boolean soundEnabled) {
+        this.soundEnabled = soundEnabled;
+        setChanged();
     }
 
     public GameObjectCollection<GameObject> getObjects() {

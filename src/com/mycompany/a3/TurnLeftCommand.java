@@ -13,10 +13,10 @@ public class TurnLeftCommand extends Command {
     }
     
     public static TurnLeftCommand getCommand(GameWorld gw) {
-    	if (command == null) {
-    		command = new TurnLeftCommand(gw);
-    	}
-    	return command;
+        if (command == null) {
+            command = new TurnLeftCommand(gw);
+        }
+        return command;
     }
 
     @Override

@@ -18,7 +18,7 @@ public abstract class GameObject {
      * @param color
      */
     public GameObject(IGameWorld gw, int color) {
-    	this.gw = gw;
+        this.gw = gw;
         Random random = new Random();
         this.size = random.nextInt(MAXIMUM_SIZE - MINIMUM_SIZE + 1) + MINIMUM_SIZE;
         this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
@@ -30,7 +30,7 @@ public abstract class GameObject {
      * @param size
      */
     public GameObject(IGameWorld gw, int size, int color) {
-    	this.gw = gw;
+        this.gw = gw;
         Random random = new Random();
         this.size = size;
         this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
@@ -106,8 +106,8 @@ public abstract class GameObject {
     /**
      * @return the GameWorld
      */
-	public IGameWorld getGw() {
-		return gw;
-	}
+    public IGameWorld getGw() {
+        return gw;
+    }
 
 }

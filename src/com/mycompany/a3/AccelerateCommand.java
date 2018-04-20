@@ -13,10 +13,10 @@ public class AccelerateCommand extends Command {
     }
     
     public static AccelerateCommand getCommand(GameWorld gw) {
-    	if (command == null) {
-    		command = new AccelerateCommand(gw);
-    	}
-    	return command;
+        if (command == null) {
+            command = new AccelerateCommand(gw);
+        }
+        return command;
     }
 
     @Override

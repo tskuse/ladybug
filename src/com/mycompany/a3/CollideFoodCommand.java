@@ -13,10 +13,10 @@ public class CollideFoodCommand extends Command {
     }
     
     public static CollideFoodCommand getCommand(GameWorld gw) {
-    	if (command == null) {
-    		command = new CollideFoodCommand(gw);
-    	}
-    	return command;
+        if (command == null) {
+            command = new CollideFoodCommand(gw);
+        }
+        return command;
     }
 
     @Override
