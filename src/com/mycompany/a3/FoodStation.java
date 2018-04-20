@@ -50,15 +50,17 @@ public class FoodStation extends Fixed implements IDrawable {
     }
 
 	public void draw(Graphics g, Point2D pCmpRelPrnt) {
+        int localX = (int) (pCmpRelPrnt.getX() + getLocation().getX());
+        int localY = (int) (pCmpRelPrnt.getY() + getLocation().getY());
         g.setColor(getColor());
-        g.fillRect((int) (getLocation().getX() + pCmpRelPrnt.getX()),
-                   (int) (getLocation().getY() + pCmpRelPrnt.getY()),
+        g.fillRect(localX - (getSize() + 1) / 2,
+                   localY - (getSize() + 1) / 2,
                    getSize(),
                    getSize());
         g.setColor(ColorUtil.BLACK);
-        g.drawStringBaseline(Integer.toString(capacity),
-                             (int) (getLocation().getX() + pCmpRelPrnt.getX() + getSize() / 4),
-                             (int) (getLocation().getY() + pCmpRelPrnt.getY() + getSize() / 2));
+        g.drawString(Integer.toString(capacity),
+                             localX,
+                             localY);
 	}
 
 }

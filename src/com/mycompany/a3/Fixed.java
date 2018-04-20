@@ -15,8 +15,8 @@ public abstract class Fixed extends GameObject {
      * @param size
      * @param color
      */
-    public Fixed(IGameWorld gw, int size, int color) {
-        super(gw, size, color);
+    public Fixed(IGameWorld gw, Point2D location, int size, int color) {
+        super(gw, location, size, color);
     }
 
     /**

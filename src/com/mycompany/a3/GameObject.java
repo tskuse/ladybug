@@ -20,9 +20,9 @@ public abstract class GameObject {
     public GameObject(IGameWorld gw, int color) {
     	this.gw = gw;
         Random random = new Random();
-        this.location = new Point2D(random.nextDouble() * gw.getMaxWidth(),
-                                    random.nextDouble() * gw.getMaxHeight());
         this.size = random.nextInt(MAXIMUM_SIZE - MINIMUM_SIZE + 1) + MINIMUM_SIZE;
+        this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
+                                                     random.nextDouble() * gw.getMaxHeight()), size);
         this.color = color;
     }
 
@@ -32,9 +32,9 @@ public abstract class GameObject {
     public GameObject(IGameWorld gw, int size, int color) {
     	this.gw = gw;
         Random random = new Random();
-        this.location = new Point2D(random.nextDouble() * gw.getMaxWidth(),
-                                    random.nextDouble() * gw.getMaxHeight());
         this.size = size;
+        this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
+                                                     random.nextDouble() * gw.getMaxHeight()), size);
         this.color = color;
     }
     
@@ -44,8 +44,8 @@ public abstract class GameObject {
      */
     public GameObject(IGameWorld gw, Point2D location, int size, int color) {
         this.gw = gw;
-        this.location = location;
         this.size = size;
+        this.location = validateLocation(location, size);
         this.color = color;
     }
     
@@ -56,26 +56,30 @@ public abstract class GameObject {
         return location;
     }
 
+    public Point2D validateLocation(Point2D location, int size) {
+        if (location.getX() > getGw().getMaxWidth() - (size + 1)/2) {
+            location.setX(getGw().getMaxWidth() - (size + 1)/2);
+        } else if (location.getX() < (size + 1)/2) {
+            location.setX((size + 1)/2);
+        } else {
+            location.setX(location.getX());
+        }
+
+        if (location.getY() > getGw().getMaxHeight() - (size + 1) / 2) {
+            location.setY(getGw().getMaxHeight() - (size + 1) / 2);
+        } else if (location.getY() < (size + 1) / 2) {
+            location.setY((size + 1) / 2);
+        } else {
+            location.setY(location.getY());
+        }
+        return location;
+    }
+
     /**
      * @param location the location to set
      */
     public void setLocation(Point2D location) {
-        // ensure object edges do not fall outside the max area
-        if (location.getX() > getGw().getMaxWidth() - (this.size + 1)/2) {
-            this.location.setX(getGw().getMaxWidth() - (this.size + 1)/2);
-        } else if (location.getX() < (this.size + 1)/2) {
-            this.location.setX((this.size + 1)/2);
-        } else {
-            this.location.setX(location.getX());
-        }
-
-        if (location.getY() > getGw().getMaxHeight() - (this.size + 1) / 2) {
-            this.location.setY(getGw().getMaxHeight() - (this.size + 1) / 2);
-        } else if (location.getY() < (this.size + 1) / 2) {
-            this.location.setY((this.size + 1) / 2);
-        } else {
-            this.location.setY(location.getY());
-        }
+        this.location = validateLocation(location, this.size);
     }
 
     /**

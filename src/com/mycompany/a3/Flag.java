@@ -15,7 +15,7 @@ public class Flag extends Fixed implements IUncolorable {
      * @param sequenceNumber
      */
     public Flag(IGameWorld gw, Point2D location, int sequenceNumber) {
-        super(gw, DEFAULT_SIZE, DEFAULT_COLOR);
+        super(gw, location, DEFAULT_SIZE, DEFAULT_COLOR);
         this.sequenceNumber = sequenceNumber;
     }
 

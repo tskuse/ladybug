@@ -67,7 +67,7 @@ public class GameWorld extends Observable implements IGameWorld {
         objects.add(new FoodStation(new GameWorldInfoProxy(this)));
         objects.add(new FoodStation(new GameWorldInfoProxy(this)));
 
-        System.out.println("Initialized game world.");
+        System.out.println("Initialized game world with size " + maxWidth + "x" + maxHeight + ".");
         
         setChanged();
     }
