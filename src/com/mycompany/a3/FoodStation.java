@@ -58,9 +58,9 @@ public class FoodStation extends Fixed implements IDrawable {
                    getSize(),
                    getSize());
         g.setColor(ColorUtil.BLACK);
-        g.drawString(Integer.toString(capacity),
-                             localX,
-                             localY);
+        g.drawStringBaseline(Integer.toString(capacity),
+                             localX - (g.getFont().stringWidth(Integer.toString(capacity)) + 1) / 2,
+                             localY + (g.getFont().getHeight() + 1) / 4);
 	}
 
 }
