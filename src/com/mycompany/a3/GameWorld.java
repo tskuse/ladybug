@@ -60,7 +60,8 @@ public class GameWorld extends Observable implements IGameWorld {
         
         // add ladybug at flag 1
         objects.add(player = Ladybug.getLadybug(new GameWorldInfoProxy(this),
-                                                objects.getIterator().getNext().getLocation()));
+                                                new Point2D(random.nextDouble() * this.getMaxWidth(),
+                                                            random.nextDouble() * this.getMaxHeight())));
       
         objects.add(new Spider(new GameWorldInfoProxy(this)));
         objects.add(new Spider(new GameWorldInfoProxy(this)));
