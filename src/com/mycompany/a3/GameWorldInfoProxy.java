@@ -84,4 +84,8 @@ public class GameWorldInfoProxy implements IGameWorld {
 		return;
 	}
 
+	public GameObjectCollection<GameObject> getObjects() {
+		return null;
+	}
+
 }

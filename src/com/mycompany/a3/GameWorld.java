@@ -262,5 +262,9 @@ public class GameWorld extends Observable implements IGameWorld {
 		this.soundEnabled = soundEnabled;
 		setChanged();
     }
+
+    public GameObjectCollection<GameObject> getObjects() {
+        return objects;
+    }
     
 }

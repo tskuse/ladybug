@@ -99,4 +99,9 @@ public interface IGameWorld {
 	 */
 	public void setSoundEnabled(boolean soundEnabled);
 
+	/**
+	 * @return the objects
+	 */
+	public GameObjectCollection<GameObject> getObjects();
+
 }
