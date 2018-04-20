@@ -163,14 +163,13 @@ public class Ladybug extends Movable implements IDrawable, ISteerable {
     }
 
     public void draw(Graphics g, Point2D pCmpRelPrnt) {
-        int localX = (int) (pCmpRelPrnt.getX() + getLocation().getX());
-        int localY = (int) (pCmpRelPrnt.getY() + getLocation().getY());
+        Point2D origin = new Point2D(pCmpRelPrnt.getX() + getLocation().getX(), pCmpRelPrnt.getY() + getLocation().getY());
         g.setColor(getColor());
-        g.fillArc(localX - (getSize() + 1) / 2,
-                  localY - (getSize() + 1) / 2,
+        g.fillArc((int) origin.getX() - (getSize() + 1) / 2,
+                  (int) origin.getY() - (getSize() + 1) / 2,
                   getSize(),
                   getSize(),
                   0, 360);
-	}
+    }
 
 }
