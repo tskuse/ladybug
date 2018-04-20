@@ -4,6 +4,7 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Button;
 import com.codename1.ui.CheckBox;
 import com.codename1.ui.Command;
+import com.codename1.ui.Container;
 import com.codename1.ui.Form;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BoxLayout;
@@ -42,23 +43,25 @@ public class Game extends Form {
         this.add(BorderLayout.NORTH, sv);
         gw.addObserver(sv);
 
-        this.add(BorderLayout.WEST,
-                 BoxLayout.encloseY(createCommandButton(AccelerateCommand.getCommand(gw)),
-                		 			createCommandButton(TurnLeftCommand.getCommand(gw))));
+        Container leftControlContainer = BoxLayout.encloseY(createCommandButton(AccelerateCommand.getCommand(gw)),
+                                                            createCommandButton(TurnLeftCommand.getCommand(gw)));
+        leftControlContainer.getAllStyles().setPadding(Container.TOP, 200);
+        this.add(BorderLayout.WEST, leftControlContainer);
 
         mv = new MapView();
         this.add(BorderLayout.CENTER, mv);
         gw.addObserver(mv);
         
-        this.add(BorderLayout.EAST,
-                 BoxLayout.encloseY(createCommandButton(BrakeCommand.getCommand(gw)),
-                		 			createCommandButton(TurnRightCommand.getCommand(gw))));
+        Container rightControlContainer = BoxLayout.encloseY(createCommandButton(BrakeCommand.getCommand(gw)),
+                                                             createCommandButton(TurnRightCommand.getCommand(gw)));
+        rightControlContainer.getAllStyles().setPadding(Container.TOP, 200);
+        this.add(BorderLayout.EAST, rightControlContainer);
 
         this.add(BorderLayout.SOUTH,
                  FlowLayout.encloseCenter(createCommandButton(CollideFlagCommand.getCommand(gw)),
-                		 				  createCommandButton(CollideSpiderCommand.getCommand(gw)),
-                		 				  createCommandButton(CollideFoodCommand.getCommand(gw)),
-                		 				  createCommandButton(TickClockCommand.getCommand(gw))));        
+                                          createCommandButton(CollideSpiderCommand.getCommand(gw)),
+                                          createCommandButton(CollideFoodCommand.getCommand(gw)),
+                                          createCommandButton(TickClockCommand.getCommand(gw))));        
 
         this.addKeyListener('a', AccelerateCommand.getCommand(gw));
         this.addKeyListener('b', BrakeCommand.getCommand(gw));
@@ -75,8 +78,8 @@ public class Game extends Form {
     }
     
     private Button createCommandButton(Command command) {
-    	Button button = new Button(command);
-    	button.getUnselectedStyle().setBgTransparency(255);
+        Button button = new Button(command);
+        button.getUnselectedStyle().setBgTransparency(255);
         button.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
         button.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
         button.getAllStyles().setMargin(2, 2, 2, 2);
