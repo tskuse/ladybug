@@ -10,12 +10,16 @@ import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.ui.util.UITimer;
 
-public class Game extends Form {
+public class Game extends Form implements Runnable {
     
     private GameWorld gw;
     private MapView mv;
     private ScoreView sv;
+
+    private UITimer timer;
+    private final int TICK_RATE = 20;
 
     public Game() {
         gw = new GameWorld();
@@ -61,7 +65,7 @@ public class Game extends Form {
                  FlowLayout.encloseCenter(createCommandButton(CollideFlagCommand.getCommand(gw)),
                                           createCommandButton(CollideSpiderCommand.getCommand(gw)),
                                           createCommandButton(CollideFoodCommand.getCommand(gw)),
-                                          createCommandButton(TickClockCommand.getCommand(gw))));        
+                                          createCommandButton(TickClockCommand.getCommand(gw, TICK_RATE))));        
 
         this.addKeyListener('a', AccelerateCommand.getCommand(gw));
         this.addKeyListener('b', BrakeCommand.getCommand(gw));
@@ -69,12 +73,15 @@ public class Game extends Form {
         this.addKeyListener('r', TurnRightCommand.getCommand(gw));
         this.addKeyListener('f', CollideFoodCommand.getCommand(gw));
         this.addKeyListener('g', CollideSpiderCommand.getCommand(gw));
-        this.addKeyListener('t', TickClockCommand.getCommand(gw));
+        this.addKeyListener('t', TickClockCommand.getCommand(gw, TICK_RATE));
         this.addKeyListener('x', ExitCommand.getCommand(gw));
         
         this.show();
         gw.init(mv.getWidth(), mv.getHeight());
         gw.notifyObservers();
+
+        timer = new UITimer(this);
+        timer.schedule(TICK_RATE, true, this);
     }
     
     private Button createCommandButton(Command command) {
@@ -86,5 +93,11 @@ public class Game extends Form {
         button.getAllStyles().setPadding(5, 5, 2, 2);
         return button;
     }
+
+	public void run() {
+        gw.tickClock(TICK_RATE);
+        gw.notifyObservers();
+        repaint();
+	}
 
 }

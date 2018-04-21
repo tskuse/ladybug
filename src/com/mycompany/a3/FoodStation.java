@@ -6,7 +6,7 @@ import com.codename1.ui.geom.Point2D;
 
 public class FoodStation extends Fixed {
 
-    private static final double DEFAULT_CAPACITY_RATIO = 0.8;
+    private static final double DEFAULT_CAPACITY_RATIO = 2.5;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(0, 255, 0);
     private static final int DEPLETED_COLOR = ColorUtil.rgb(155, 255, 155);
 

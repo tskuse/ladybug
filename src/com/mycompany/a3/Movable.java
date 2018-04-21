@@ -7,7 +7,8 @@ import com.codename1.ui.geom.Point2D;
 public abstract class Movable extends GameObject {
     
     private final int HEADING_RANGE = 360;
-    private final int MAX_SPEED = 50;
+    private final int MIN_SPEED = 100;
+    private final int MAX_SPEED = 300;
     
     private int heading;
     private int speed;
@@ -20,7 +21,7 @@ public abstract class Movable extends GameObject {
         super(gw, color);
         Random random = new Random();
         this.heading = random.nextInt(HEADING_RANGE);
-        this.speed = random.nextInt(MAX_SPEED + 1);
+        this.speed = MIN_SPEED + random.nextInt(MAX_SPEED + 1);
     }
 
     /**
@@ -33,7 +34,7 @@ public abstract class Movable extends GameObject {
         super(gw, location, size, color);
         Random random = new Random();
         this.heading = random.nextInt(HEADING_RANGE);
-        this.speed = random.nextInt(MAX_SPEED + 1);
+        this.speed = MIN_SPEED + random.nextInt(MAX_SPEED + 1);
     }
 
     /**
@@ -87,10 +88,11 @@ public abstract class Movable extends GameObject {
 
     /**
      * update the object's location based on heading and speed
+     * @param elapsedTime elapsed time in milliseconds
      */
-    public void move() {
-        Point2D location = new Point2D(getLocation().getX() + Math.cos(Math.toRadians(90 - heading)) * speed,
-                                       getLocation().getY() + Math.sin(Math.toRadians(90 - heading)) * speed);
+    public void move(int elapsedTime) {
+        Point2D location = new Point2D(getLocation().getX() + Math.cos(Math.toRadians(90 - heading)) * speed * ((double) elapsedTime / 1000),
+                                       getLocation().getY() + Math.sin(Math.toRadians(90 - heading)) * speed * ((double) elapsedTime / 1000));
         setLocation(location);
     }
     

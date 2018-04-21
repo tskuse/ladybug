@@ -61,8 +61,9 @@ public interface IGameWorld {
 
     /**
      * Updates object states and advances the game clock
+     * @param tickRate the tick rate in milliseconds
      */
-    public void tickClock();
+    public void tickClock(int tickRate);
 
     /**
      * @return the clockTime

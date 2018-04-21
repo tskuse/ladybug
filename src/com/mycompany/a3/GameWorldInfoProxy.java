@@ -52,7 +52,7 @@ public class GameWorldInfoProxy implements IGameWorld {
         return;
     }
 
-    public void tickClock() {
+    public void tickClock(int tickRate) {
         return;
     }
 

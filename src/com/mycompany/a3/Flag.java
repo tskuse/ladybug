@@ -6,7 +6,7 @@ import com.codename1.ui.geom.Point2D;
 
 public class Flag extends Fixed implements IUncolorable {
 
-    private static final int DEFAULT_SIZE = 60;
+    private static final int DEFAULT_SIZE = 100;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(0, 0, 255);
 
     private int sequenceNumber;

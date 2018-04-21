@@ -8,14 +8,14 @@ public class Ladybug extends Movable implements ISteerable {
 
     private static Ladybug ladybug;
 
-    private static final int DEFAULT_SIZE = 60;
+    private static final int DEFAULT_SIZE = 80;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(255, 0, 0);
     private static final int COLOR_MODIFIER = ColorUtil.rgb(0, 20, 20);
     private static final int DEFAULT_HEADING = 0;
-    private static final int DEFAULT_SPEED = 10;
-    private static final int DEFAULT_MAX_SPEED = 50;
-    private static final int DEFAULT_FOOD_LEVEL = 30;
-    private static final int DEFAULT_FOOD_CONSUMPTION_RATE = 5;
+    private static final int DEFAULT_SPEED = 200;
+    private static final int DEFAULT_MAX_SPEED = 1000;
+    private static final int DEFAULT_FOOD_LEVEL = 1000;
+    private static final int DEFAULT_FOOD_CONSUMPTION_RATE = 1;
     private static final int DEFAULT_HEALTH = 10;
     private static final int DEFAULT_LAST_FLAG = 1;
 

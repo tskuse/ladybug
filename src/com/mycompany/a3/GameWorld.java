@@ -8,7 +8,7 @@ public class GameWorld extends Observable implements IGameWorld {
     
     private final int STARTING_LIVES = 3;
     private final int ACCELERATION_QTY = 5;
-    private final int TURN_QTY = 5;
+    private final int TURN_QTY = 20;
     private final int TOTAL_FLAGS = 4;
 
     private int clockTime;
@@ -191,15 +191,14 @@ public class GameWorld extends Observable implements IGameWorld {
     /* (non-Javadoc)
      * @see com.mycompany.a3.IGameWorld#tickClock()
      */
-    public void tickClock() {
+    public void tickClock(int tickRate) {
         System.out.println("Ticking game clock...");
-        
+        GameObject object;
         IIterator<GameObject> it = objects.getIterator();
         while (it.hasNext()) {
-            GameObject object = it.getNext();
+            object = it.getNext();
             if (object instanceof Movable) {
-                Movable movable = (Movable) object;
-                movable.move();
+                ((Movable) object).move(tickRate);
             }
         }
 
