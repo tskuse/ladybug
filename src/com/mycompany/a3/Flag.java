@@ -43,9 +43,9 @@ public class Flag extends Fixed implements IDrawable, IUncolorable {
 
     public void draw(Graphics g, Point2D pCmpRelPrnt) {
         Point2D origin = new Point2D(pCmpRelPrnt.getX() + getLocation().getX(), pCmpRelPrnt.getY() + getLocation().getY());
-        Point2D v1 = new Point2D(origin.getX(), origin.getY() - (getSize() + 1) / 2);
-        Point2D v2 = new Point2D(origin.getX() - (getSize() + 1) / 2, origin.getY() + (getSize() + 1) / 2);
-        Point2D v3 = new Point2D(origin.getX() + (getSize() + 1) / 2, origin.getY() + (getSize() + 1) / 2);
+        Point2D v1 = new Point2D(origin.getX(), origin.getY() + (getSize() + 1) / 2);
+        Point2D v2 = new Point2D(origin.getX() - (getSize() + 1) / 2, origin.getY() - (getSize() + 1) / 2);
+        Point2D v3 = new Point2D(origin.getX() + (getSize() + 1) / 2, origin.getY() - (getSize() + 1) / 2);
         g.setColor(getColor());
         g.fillTriangle((int) v1.getX(), (int) v1.getY(), (int) v2.getX(), (int) v2.getY(), (int) v3.getX(), (int) v3.getY());
         g.setColor(ColorUtil.rgb(255, 255, 255));
