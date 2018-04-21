@@ -48,7 +48,12 @@ public class Spider extends Movable implements IUncolorable {
     }
 
 	public void draw(Graphics g, Point2D pCmpRelPrnt) {
-		
+        Point2D origin = new Point2D(pCmpRelPrnt.getX() + getLocation().getX(), pCmpRelPrnt.getY() + getLocation().getY());
+        int distanceToEdge = (getSize() + 1) / 2;
+        int xPoints[] = {(int) origin.getX(), (int) origin.getX() - distanceToEdge, (int) origin.getX() + distanceToEdge};
+        int yPoints[] = {(int) origin.getY() + distanceToEdge, (int) origin.getY() - distanceToEdge, (int) origin.getY() - distanceToEdge};
+        g.setColor(getColor());
+        g.drawPolygon(xPoints, yPoints, 3);
 	}
 
 }
