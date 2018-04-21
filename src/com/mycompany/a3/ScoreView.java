@@ -13,8 +13,11 @@ public class ScoreView extends Container implements Observer {
     private Label foodValue;
     private Label healthValue;
     private Label soundValue;
+    private int tickRate;
     
-    public ScoreView() {
+    public ScoreView(int tickRate) {
+        this.tickRate = tickRate;
+
         Label timeLabel = new Label("Time:");
         timeValue = createValueLabel("0");
         Label livesLabel = new Label("Lives Remaining:");
@@ -43,7 +46,7 @@ public class ScoreView extends Container implements Observer {
     public void update(Observable observable, Object data) {
         IGameWorld gw = ((IGameWorld) observable);
         Ladybug player = gw.getPlayer();
-        timeValue.setText(Integer.toString(gw.getClockTime()));
+        timeValue.setText(Integer.toString(gw.getClockTime() / (1000 / tickRate)));
         livesValue.setText(Integer.toString(gw.getLivesRemaining()));
         foodValue.setText(Integer.toString(player.getFoodLevel()));
         healthValue.setText(Integer.toString(player.getHealthLevel()));

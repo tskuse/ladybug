@@ -43,7 +43,7 @@ public class Game extends Form implements Runnable {
         
         toolbar.addCommandToRightBar(HelpCommand.getCommand());
 
-        sv = new ScoreView();
+        sv = new ScoreView(TICK_RATE);
         this.add(BorderLayout.NORTH, sv);
         gw.addObserver(sv);
 

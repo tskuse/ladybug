@@ -14,14 +14,14 @@ public class Ladybug extends Movable implements ISteerable {
     private static final int DEFAULT_HEADING = 0;
     private static final int DEFAULT_SPEED = 200;
     private static final int DEFAULT_MAX_SPEED = 1000;
-    private static final int DEFAULT_FOOD_LEVEL = 1000;
-    private static final int DEFAULT_FOOD_CONSUMPTION_RATE = 1;
+    private static final int DEFAULT_FOOD_LEVEL = 20;
+    private static final int FOOD_CONSUMPTION_RATE = 50;
     private static final int DEFAULT_HEALTH = 10;
     private static final int DEFAULT_LAST_FLAG = 1;
 
     private int maximumSpeed;
     private int foodLevel;
-    private int foodConsumptionRate;
+    private int foodConsumption;
     private int healthLevel;
     private int lastFlagReached;
 
@@ -42,9 +42,9 @@ public class Ladybug extends Movable implements ISteerable {
         super(gw, location, DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_HEADING, DEFAULT_SPEED);
         this.maximumSpeed = DEFAULT_MAX_SPEED;
         this.foodLevel = DEFAULT_FOOD_LEVEL;
-        this.foodConsumptionRate = DEFAULT_FOOD_CONSUMPTION_RATE;
         this.healthLevel = DEFAULT_HEALTH;
         this.lastFlagReached = DEFAULT_LAST_FLAG;
+        this.foodConsumption = 0;
     }
 
     /**
@@ -52,6 +52,7 @@ public class Ladybug extends Movable implements ISteerable {
      */
     public void reset() {
         setFoodLevel(DEFAULT_FOOD_LEVEL);
+        this.foodConsumption = 0;
         setHealthLevel(DEFAULT_HEALTH);
     }
 
@@ -145,10 +146,11 @@ public class Ladybug extends Movable implements ISteerable {
      * Reduce the ladybug's foodLevel based on foodConsumptionRate
      */
     public void reduceFood() {
-        if (foodLevel - foodConsumptionRate < 0) {
-            foodLevel = 0;
-        } else {
-            foodLevel -= foodConsumptionRate;
+        if (++foodConsumption == FOOD_CONSUMPTION_RATE) {
+            if (--foodLevel < 0) {
+                foodLevel = 0;
+            }
+            foodConsumption = 0;
         }
     }
 
@@ -159,7 +161,7 @@ public class Ladybug extends Movable implements ISteerable {
                 + ColorUtil.red(getColor()) + "," + ColorUtil.green(getColor()) + ","
                 + ColorUtil.blue(getColor()) + "] heading=" + getHeading()
                 + " speed=" + getSpeed() + " size=" + getSize() + " maxSpeed="
-                + maximumSpeed + " foodConsumptionRate=" + foodConsumptionRate;
+                + maximumSpeed + " foodConsumption=" + foodConsumption;
     }
 
     public void draw(Graphics g, Point2D pCmpRelPrnt) {
