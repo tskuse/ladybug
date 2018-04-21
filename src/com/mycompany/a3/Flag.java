@@ -4,7 +4,7 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point2D;
 
-public class Flag extends Fixed implements IDrawable, IUncolorable {
+public class Flag extends Fixed implements IUncolorable {
 
     private static final int DEFAULT_SIZE = 60;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(0, 0, 255);
@@ -51,7 +51,7 @@ public class Flag extends Fixed implements IDrawable, IUncolorable {
         g.setColor(ColorUtil.rgb(255, 255, 255));
         g.drawStringBaseline(Integer.toString(sequenceNumber),
                              (int) origin.getX() - (g.getFont().stringWidth(Integer.toString(sequenceNumber)) + 1) / 2,
-                             (int) origin.getY() + (g.getFont().getHeight() + 1) / 2);
+                             (int) origin.getY());
 	}
 
 }

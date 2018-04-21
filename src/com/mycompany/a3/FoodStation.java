@@ -4,7 +4,7 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point2D;
 
-public class FoodStation extends Fixed implements IDrawable {
+public class FoodStation extends Fixed {
 
     private static final double DEFAULT_CAPACITY_RATIO = 0.8;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(0, 255, 0);
@@ -54,8 +54,7 @@ public class FoodStation extends Fixed implements IDrawable {
         g.setColor(getColor());
         g.fillRect((int) origin.getX() - (getSize() + 1) / 2,
                    (int) origin.getY() - (getSize() + 1) / 2,
-                   getSize(),
-                   getSize());
+                   getSize(), getSize());
         g.setColor(ColorUtil.BLACK);
         g.drawStringBaseline(Integer.toString(capacity),
                              (int) origin.getX() - (g.getFont().stringWidth(Integer.toString(capacity)) + 1) / 2,

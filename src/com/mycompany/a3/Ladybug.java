@@ -4,7 +4,7 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point2D;
 
-public class Ladybug extends Movable implements IDrawable, ISteerable {
+public class Ladybug extends Movable implements ISteerable {
 
     private static Ladybug ladybug;
 
@@ -167,8 +167,7 @@ public class Ladybug extends Movable implements IDrawable, ISteerable {
         g.setColor(getColor());
         g.fillArc((int) origin.getX() - (getSize() + 1) / 2,
                   (int) origin.getY() - (getSize() + 1) / 2,
-                  getSize(),
-                  getSize(),
+                  getSize(), getSize(),
                   0, 360);
     }
 

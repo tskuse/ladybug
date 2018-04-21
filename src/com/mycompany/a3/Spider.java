@@ -3,6 +3,7 @@ package com.mycompany.a3;
 import java.util.Random;
 
 import com.codename1.charts.util.ColorUtil;
+import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point2D;
 
 public class Spider extends Movable implements IUncolorable {
@@ -45,5 +46,9 @@ public class Spider extends Movable implements IUncolorable {
                 + "," + ColorUtil.blue(getColor()) + "] heading=" + getHeading()
                 + " speed=" + getSpeed() + " size=" + getSize();
     }
+
+	public void draw(Graphics g, Point2D pCmpRelPrnt) {
+		
+	}
 
 }

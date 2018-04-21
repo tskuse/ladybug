@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.codename1.ui.geom.Point2D;
 
-public abstract class GameObject {
+public abstract class GameObject implements IDrawable {
     
     private static final int MINIMUM_SIZE = 50;
     private static final int MAXIMUM_SIZE = 100;

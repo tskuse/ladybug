@@ -32,12 +32,11 @@ public class MapView extends Container implements Observer {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        GameObject object;
         IIterator<GameObject> it = objects.getIterator();
         while (it.hasNext()) {
-            GameObject object = it.getNext();
-            if (object instanceof IDrawable) {
-                ((IDrawable) object).draw(g, new Point2D(getX(), getY()));
-            }
+            object = it.getNext();
+            object.draw(g, new Point2D(getX(), getY()));
         }
     }
 }
