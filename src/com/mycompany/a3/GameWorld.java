@@ -192,13 +192,32 @@ public class GameWorld extends Observable implements IGameWorld {
      * @see com.mycompany.a3.IGameWorld#tickClock()
      */
     public void tickClock(int tickRate) {
-        System.out.println("Ticking game clock...");
-        GameObject object;
+        //System.out.println("Ticking game clock...");
+
         IIterator<GameObject> it = objects.getIterator();
         while (it.hasNext()) {
-            object = it.getNext();
+            GameObject object = it.getNext();
             if (object instanceof Movable) {
                 ((Movable) object).move(tickRate);
+            }
+        }
+
+        it = objects.getIterator();
+        while (it.hasNext()) {
+            GameObject object = it.getNext();
+            IIterator<GameObject> it2 = objects.getIterator();
+            while (it2.hasNext()) {
+                GameObject otherObject = it2.getNext();
+                if (object != otherObject && object.collidesWith(otherObject)) {
+                    if (!object.getCollisionSet().contains(otherObject)) {
+                        object.handleCollision(otherObject);
+                        object.getCollisionSet().add(otherObject);
+                        otherObject.getCollisionSet().add(object);
+                    }
+                } else {
+                    object.getCollisionSet().remove(otherObject);
+                    otherObject.getCollisionSet().remove(object);
+                }
             }
         }
 

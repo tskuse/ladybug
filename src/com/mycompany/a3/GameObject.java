@@ -1,10 +1,11 @@
 package com.mycompany.a3;
 
+import java.util.HashSet;
 import java.util.Random;
 
 import com.codename1.ui.geom.Point2D;
 
-public abstract class GameObject implements IDrawable {
+public abstract class GameObject implements ICollider, IDrawable {
     
     private static final int MINIMUM_SIZE = 50;
     private static final int MAXIMUM_SIZE = 150;
@@ -13,6 +14,7 @@ public abstract class GameObject implements IDrawable {
     private Point2D location;
     private int size;
     private int color;
+    private HashSet<GameObject> collisionSet;
     
     /**
      * @param color
@@ -24,6 +26,7 @@ public abstract class GameObject implements IDrawable {
         this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
                                                      random.nextDouble() * gw.getMaxHeight()), size);
         this.color = color;
+        this.collisionSet = new HashSet<GameObject>();
     }
 
     /**
@@ -36,6 +39,7 @@ public abstract class GameObject implements IDrawable {
         this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
                                                      random.nextDouble() * gw.getMaxHeight()), size);
         this.color = color;
+        this.collisionSet = new HashSet<GameObject>();
     }
     
     /**
@@ -47,6 +51,7 @@ public abstract class GameObject implements IDrawable {
         this.size = size;
         this.location = validateLocation(location, size);
         this.color = color;
+        this.collisionSet = new HashSet<GameObject>();
     }
     
     /**
@@ -108,6 +113,28 @@ public abstract class GameObject implements IDrawable {
      */
     public IGameWorld getGw() {
         return gw;
+    }
+
+    public boolean collidesWith(GameObject otherObject) {
+        int edgeDistance1 = (getSize() + 1) / 2;
+        double l1 = getLocation().getX() - edgeDistance1;
+        double r1 = getLocation().getX() + edgeDistance1;
+        double t1 = getLocation().getY() + edgeDistance1;
+        double b1 = getLocation().getY() - edgeDistance1;
+        int edgeDistance2 = (otherObject.getSize() + 1) / 2;
+        double l2 = otherObject.getLocation().getX() - edgeDistance2;
+        double r2 = otherObject.getLocation().getX() + edgeDistance2;
+        double t2 = otherObject.getLocation().getY() + edgeDistance2;
+        double b2 = otherObject.getLocation().getY() - edgeDistance2;
+        return !(((r1 < l2) || (l1 > r2)) || ((t2 < b1) || (t1 < b2)));
+    }
+
+    public void handleCollision(GameObject otherObject) {
+        System.out.println(this + " collided with " + otherObject);
+    }
+
+    public HashSet<GameObject> getCollisionSet() {
+        return collisionSet;
     }
 
 }
