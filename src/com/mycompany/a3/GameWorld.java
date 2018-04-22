@@ -17,6 +17,10 @@ public class GameWorld extends Observable implements IGameWorld {
     private int maxWidth;
     private int maxHeight;
 
+    private Sound flagSound;
+    private Sound foodSound;
+    private Sound spiderSound;
+
     private Ladybug player;
     private GameObjectCollection<GameObject> objects;
 
@@ -27,6 +31,9 @@ public class GameWorld extends Observable implements IGameWorld {
         // establish sensible defaults for map size until Map is created
         this.maxWidth = 1024;
         this.maxHeight = 768;
+        this.flagSound = new Sound("coin.wav");
+        this.foodSound = new Sound("up.wav");
+        this.spiderSound = new Sound("enemy.wav");
     }
     
     /* (non-Javadoc)
@@ -140,7 +147,6 @@ public class GameWorld extends Observable implements IGameWorld {
         System.out.println("Flag collision with Flag #" + flag.getSequenceNumber());
         if (player.getLastFlagReached() == flag.getSequenceNumber() - 1) {
             if (soundEnabled) {
-                Sound flagSound = new Sound("coin.wav");
                 flagSound.play();
             }
             if (flag.getSequenceNumber() == TOTAL_FLAGS) {
@@ -161,7 +167,6 @@ public class GameWorld extends Observable implements IGameWorld {
             System.out.println("Collision with a FoodStation with capacity " + foodStation.getCapacity());
             objects.add(new FoodStation(new GameWorldObjectProxy(this)));
             if (soundEnabled) {
-                Sound foodSound = new Sound("up.wav");
                 foodSound.play();
             }
         }
@@ -175,7 +180,6 @@ public class GameWorld extends Observable implements IGameWorld {
     public void handleSpiderCollision() {
         System.out.println("Collision with a Spider");
         if(soundEnabled) {
-            Sound spiderSound = new Sound("enemy.wav");
             spiderSound.play();
         }
         player.decreaseHealth();
