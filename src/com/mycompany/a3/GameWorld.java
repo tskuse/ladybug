@@ -139,6 +139,10 @@ public class GameWorld extends Observable implements IGameWorld {
     public void handleFlagCollision(Flag flag) {
         System.out.println("Flag collision with Flag #" + flag.getSequenceNumber());
         if (player.getLastFlagReached() == flag.getSequenceNumber() - 1) {
+            if (soundEnabled) {
+                Sound flagSound = new Sound("coin.wav");
+                flagSound.play();
+            }
             if (flag.getSequenceNumber() == TOTAL_FLAGS) {
                 win();
             }
@@ -156,6 +160,10 @@ public class GameWorld extends Observable implements IGameWorld {
         if (acquiredFood > 0) {
             System.out.println("Collision with a FoodStation with capacity " + foodStation.getCapacity());
             objects.add(new FoodStation(new GameWorldObjectProxy(this)));
+            if (soundEnabled) {
+                Sound foodSound = new Sound("up.wav");
+                foodSound.play();
+            }
         }
         player.setFoodLevel(player.getFoodLevel() + acquiredFood);
         setChanged();
@@ -166,6 +174,10 @@ public class GameWorld extends Observable implements IGameWorld {
      */
     public void handleSpiderCollision() {
         System.out.println("Collision with a Spider");
+        if(soundEnabled) {
+            Sound spiderSound = new Sound("enemy.wav");
+            spiderSound.play();
+        }
         player.decreaseHealth();
         if (player.getHealthLevel() == 0) {
             System.out.println("Player death");

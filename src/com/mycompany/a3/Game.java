@@ -77,6 +77,9 @@ public class Game extends Form implements Runnable {
         gw.init(mv.getWidth(), mv.getHeight());
         gw.notifyObservers();
 
+        BGSound bgSound = new BGSound("timer.wav");
+        bgSound.play();
+
         timer = new UITimer(this);
         timer.schedule(TICK_RATE, true, this);
     }
