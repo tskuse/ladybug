@@ -8,16 +8,18 @@ public class ToggleSoundCommand extends Command {
     private GameWorld gw;
     private static ToggleSoundCommand command;
     private CheckBox checkbox;
+    private BGSound bgSound;
     
-    private ToggleSoundCommand(GameWorld gw, CheckBox checkbox) {
+    private ToggleSoundCommand(GameWorld gw, CheckBox checkbox, BGSound bgSound) {
         super("Toggle Sound");
         this.gw = gw;
         this.checkbox = checkbox;
+        this.bgSound = bgSound;
     }
     
-    public static ToggleSoundCommand getCommand(GameWorld gw, CheckBox checkbox) {
+    public static ToggleSoundCommand getCommand(GameWorld gw, CheckBox checkbox, BGSound bgSound) {
         if (command == null) {
-            command = new ToggleSoundCommand(gw, checkbox);
+            command = new ToggleSoundCommand(gw, checkbox, bgSound);
         }
         return command;
     }
@@ -26,6 +28,11 @@ public class ToggleSoundCommand extends Command {
     public void actionPerformed(ActionEvent evt) {
         gw.setSoundEnabled(!gw.isSoundEnabled());
         checkbox.setSelected(gw.isSoundEnabled());
+        if (gw.isSoundEnabled()) {
+            bgSound.play();
+        } else {
+            bgSound.pause();
+        }
         gw.notifyObservers();
         evt.getActualComponent().getComponentForm().getToolbar().closeSideMenu();
     }

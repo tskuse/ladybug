@@ -21,6 +21,8 @@ public class Game extends Form implements Runnable {
     private UITimer timer;
     private final int TICK_RATE = 20;
 
+    private BGSound bgSound;
+
     public Game() {
         gw = new GameWorld();
 
@@ -36,7 +38,9 @@ public class Game extends Form implements Runnable {
         soundCheckBox.getAllStyles().setBgTransparency(255);
         soundCheckBox.getAllStyles().setBgColor(ColorUtil.LTGRAY);
         soundCheckBox.setSelected(gw.isSoundEnabled());
-        toolbar.addComponentToSideMenu(soundCheckBox, ToggleSoundCommand.getCommand(gw, soundCheckBox));
+
+        bgSound = new BGSound("timer.wav");
+        toolbar.addComponentToSideMenu(soundCheckBox, ToggleSoundCommand.getCommand(gw, soundCheckBox, bgSound));
         
         toolbar.addCommandToSideMenu(AboutCommand.getCommand());
         toolbar.addCommandToSideMenu(ExitCommand.getCommand(gw));
@@ -77,9 +81,9 @@ public class Game extends Form implements Runnable {
         gw.init(mv.getWidth(), mv.getHeight());
         gw.notifyObservers();
 
-        BGSound bgSound = new BGSound("timer.wav");
-        bgSound.play();
-
+        if (gw.isSoundEnabled()) {
+            bgSound.play();
+        }
         timer = new UITimer(this);
         timer.schedule(TICK_RATE, true, this);
     }
