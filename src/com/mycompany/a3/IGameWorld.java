@@ -47,12 +47,12 @@ public interface IGameWorld {
     /**
      * Handles player object colliding with a Flag
      */
-    public void handleFlagCollision(int flagReached);
+    public void handleFlagCollision(Flag flag);
 
     /**
      * Handles the player object colliding with a FoodStation
      */
-    public void handleFoodCollision();
+    public void handleFoodCollision(FoodStation foodStation);
 
     /**
      * Handles the player object colliding with a Spider

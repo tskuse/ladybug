@@ -8,7 +8,7 @@ public abstract class Movable extends GameObject {
     
     private final int HEADING_RANGE = 360;
     private final int MIN_SPEED = 100;
-    private final int MAX_SPEED = 300;
+    private final int MAX_SPEED = 200;
     
     private int heading;
     private int speed;

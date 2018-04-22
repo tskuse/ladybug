@@ -20,7 +20,28 @@ public class LadybugTest extends AbstractTest {
         GameWorld gw = new GameWorld();
         gw.init();
         Ladybug ladybug = Ladybug.getLadybug(gw, new Point2D(0, 0));
-        ladybug.setSpeed(200);
-        assertEqual(50, ladybug.getSpeed());
+        ladybug.setSpeed(2000);
+        assertEqual(300, ladybug.getSpeed());
+    }
+
+    public void testReduceHealthColorUpdate() {
+        GameWorld gw = new GameWorld();
+        gw.init();
+        Ladybug ladybug = Ladybug.getLadybug(gw, new Point2D(0,0));
+        assertEqual(ColorUtil.rgb(255,0,0), ladybug.getColor());
+        ladybug.decreaseHealth();
+        assertEqual(ColorUtil.rgb(255,20,20), ladybug.getColor());
+        ladybug.decreaseHealth();
+        assertEqual(ColorUtil.rgb(255,40,40), ladybug.getColor());
+        ladybug.decreaseHealth();
+        assertEqual(ColorUtil.rgb(255,60,60), ladybug.getColor());
+        ladybug.decreaseHealth();
+        assertEqual(ColorUtil.rgb(255,80,80), ladybug.getColor());
+        ladybug.decreaseHealth();
+        assertEqual(ColorUtil.rgb(255,100,100), ladybug.getColor());
+        ladybug.decreaseHealth();
+        assertEqual(ColorUtil.rgb(255,120,120), ladybug.getColor());
+        ladybug.decreaseHealth();
+        assertEqual(ColorUtil.rgb(255,140,140), ladybug.getColor());
     }
 }

@@ -10,6 +10,7 @@ import java.util.Observer;
 public class ScoreView extends Container implements Observer {
     private Label timeValue;
     private Label livesValue;
+    private Label flagValue;
     private Label foodValue;
     private Label healthValue;
     private Label soundValue;
@@ -22,6 +23,8 @@ public class ScoreView extends Container implements Observer {
         timeValue = createValueLabel("0");
         Label livesLabel = new Label("Lives Remaining:");
         livesValue = createValueLabel("0");
+        Label flagLabel = new Label("Last Flag Reached:");
+        flagValue = createValueLabel("0");
         Label foodLabel = new Label("Food Level:");
         foodValue = createValueLabel("0");
         Label healthLabel = new Label("Health Level:");
@@ -35,6 +38,8 @@ public class ScoreView extends Container implements Observer {
             .add(timeValue)
             .add(livesLabel)
             .add(livesValue)
+            .add(flagLabel)
+            .add(flagValue)
             .add(foodLabel)
             .add(foodValue)
             .add(healthLabel)
@@ -48,6 +53,7 @@ public class ScoreView extends Container implements Observer {
         Ladybug player = gw.getPlayer();
         timeValue.setText(Integer.toString(gw.getClockTime() / (1000 / tickRate)));
         livesValue.setText(Integer.toString(gw.getLivesRemaining()));
+        flagValue.setText(Integer.toString(player.getLastFlagReached()));
         foodValue.setText(Integer.toString(player.getFoodLevel()));
         healthValue.setText(Integer.toString(player.getHealthLevel()));
         soundValue.setText((gw.isSoundEnabled()) ? "ON" : "OFF");

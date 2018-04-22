@@ -1,10 +1,10 @@
 package com.mycompany.a3;
 
-public class GameWorldInfoProxy implements IGameWorld {
+public class GameWorldObjectProxy implements IGameWorld {
     
     private GameWorld realGameWorld;
     
-    public GameWorldInfoProxy(GameWorld realGameWorld) {
+    public GameWorldObjectProxy(GameWorld realGameWorld) {
         this.realGameWorld = realGameWorld;
     }
 
@@ -40,16 +40,16 @@ public class GameWorldInfoProxy implements IGameWorld {
         return;
     }
 
-    public void handleFlagCollision(int flagReached) {
-        return;
+    public void handleFlagCollision(Flag flag) {
+        realGameWorld.handleFlagCollision(flag);
     }
 
-    public void handleFoodCollision() {
-        return;
+    public void handleFoodCollision(FoodStation foodStation) {
+        realGameWorld.handleFoodCollision(foodStation);
     }
 
     public void handleSpiderCollision() {
-        return;
+        realGameWorld.handleSpiderCollision();
     }
 
     public void tickClock(int tickRate) {

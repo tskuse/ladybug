@@ -12,8 +12,8 @@ public class Ladybug extends Movable implements ISteerable {
     private static final int DEFAULT_COLOR = ColorUtil.rgb(255, 0, 0);
     private static final int COLOR_MODIFIER = ColorUtil.rgb(0, 20, 20);
     private static final int DEFAULT_HEADING = 0;
-    private static final int DEFAULT_SPEED = 200;
-    private static final int DEFAULT_MAX_SPEED = 1000;
+    private static final int DEFAULT_SPEED = 100;
+    private static final int DEFAULT_MAX_SPEED = 400;
     private static final int DEFAULT_FOOD_LEVEL = 20;
     private static final int FOOD_CONSUMPTION_RATE = 50;
     private static final int DEFAULT_HEALTH = 10;
@@ -54,6 +54,7 @@ public class Ladybug extends Movable implements ISteerable {
         setFoodLevel(DEFAULT_FOOD_LEVEL);
         this.foodConsumption = 0;
         setHealthLevel(DEFAULT_HEALTH);
+        updateColor();
     }
 
     /**
@@ -110,7 +111,6 @@ public class Ladybug extends Movable implements ISteerable {
      */
     @Override
     public void setSpeed(int speed) {
-        speed = speed * (healthLevel / 10);
         if (speed > maximumSpeed) {
             speed = maximumSpeed;
         }
@@ -124,6 +124,8 @@ public class Ladybug extends Movable implements ISteerable {
         if (--healthLevel < 0) {
             healthLevel = 0;
         }
+        maximumSpeed = (int) (maximumSpeed / 4 * ((double) healthLevel / 10) + maximumSpeed / 4 * 3);
+        setSpeed(getSpeed());
         updateColor();
     }
 
@@ -132,12 +134,11 @@ public class Ladybug extends Movable implements ISteerable {
      */
     private void updateColor() {
         int r, g, b;
-        int color = getColor();
         int healthLevel = getHealthLevel();
 
-        r = ColorUtil.red(color) + ColorUtil.red(COLOR_MODIFIER) * (DEFAULT_HEALTH - healthLevel);
-        g = ColorUtil.green(color) + ColorUtil.green(COLOR_MODIFIER) * (DEFAULT_HEALTH - healthLevel);
-        b = ColorUtil.blue(color) + ColorUtil.blue(COLOR_MODIFIER) * (DEFAULT_HEALTH - healthLevel);
+        r = ColorUtil.red(DEFAULT_COLOR) + ColorUtil.red(COLOR_MODIFIER) * (DEFAULT_HEALTH - healthLevel);
+        g = ColorUtil.green(DEFAULT_COLOR) + ColorUtil.green(COLOR_MODIFIER) * (DEFAULT_HEALTH - healthLevel);
+        b = ColorUtil.blue(DEFAULT_COLOR) + ColorUtil.blue(COLOR_MODIFIER) * (DEFAULT_HEALTH - healthLevel);
 
         setColor(ColorUtil.rgb(r, g, b));
     }

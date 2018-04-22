@@ -52,21 +52,19 @@ public class GameWorld extends Observable implements IGameWorld {
         Random random = new Random();
         for (int i = 0; i < TOTAL_FLAGS; i++) {
             // choosing random locations for flags for now
-            objects.add(new Flag(new GameWorldInfoProxy(this),
+            objects.add(new Flag(new GameWorldObjectProxy(this),
                                  new Point2D(random.nextDouble() * this.getMaxWidth(),
                                              random.nextDouble() * this.getMaxHeight()),
                                  i + 1));
         }
         
         // add ladybug at flag 1
-        objects.add(player = Ladybug.getLadybug(new GameWorldInfoProxy(this),
-                                                new Point2D(random.nextDouble() * this.getMaxWidth(),
-                                                            random.nextDouble() * this.getMaxHeight())));
+        objects.add(player = Ladybug.getLadybug(new GameWorldObjectProxy(this), objects.getIterator().getNext().getLocation()));
       
-        objects.add(new Spider(new GameWorldInfoProxy(this)));
-        objects.add(new Spider(new GameWorldInfoProxy(this)));
-        objects.add(new FoodStation(new GameWorldInfoProxy(this)));
-        objects.add(new FoodStation(new GameWorldInfoProxy(this)));
+        objects.add(new Spider(new GameWorldObjectProxy(this)));
+        objects.add(new Spider(new GameWorldObjectProxy(this)));
+        objects.add(new FoodStation(new GameWorldObjectProxy(this)));
+        objects.add(new FoodStation(new GameWorldObjectProxy(this)));
 
         System.out.println("Initialized game world with size " + maxWidth + "x" + maxHeight + ".");
         
@@ -138,13 +136,13 @@ public class GameWorld extends Observable implements IGameWorld {
     /* (non-Javadoc)
      * @see com.mycompany.a3.IGameWorld#handleFlagCollision(int)
      */
-    public void handleFlagCollision(int flagReached) {
-        System.out.println("Flag collision with Flag #" + flagReached);
-        if (player.getLastFlagReached() == flagReached - 1) {
-            if (flagReached == TOTAL_FLAGS) {
+    public void handleFlagCollision(Flag flag) {
+        System.out.println("Flag collision with Flag #" + flag.getSequenceNumber());
+        if (player.getLastFlagReached() == flag.getSequenceNumber() - 1) {
+            if (flag.getSequenceNumber() == TOTAL_FLAGS) {
                 win();
             }
-            player.setLastFlagReached(flagReached);
+            player.setLastFlagReached(flag.getSequenceNumber());
             setChanged();
         }
     }
@@ -152,25 +150,14 @@ public class GameWorld extends Observable implements IGameWorld {
     /* (non-Javadoc)
      * @see com.mycompany.a3.IGameWorld#handleFoodCollision()
      */
-    public void handleFoodCollision() {
-        FoodStation foodStation;
+    public void handleFoodCollision(FoodStation foodStation) {
         int acquiredFood = 0;
-        
-        IIterator<GameObject> it = objects.getIterator();
-        while (it.hasNext()) {
-            GameObject object = it.getNext();
-            if (object instanceof FoodStation) {
-                foodStation = (FoodStation) object;
-                acquiredFood = foodStation.deplete();
-                if (acquiredFood > 0) {
-                    System.out.println("SIMULATING collision with a food station");
-                    break;
-                }
-            }
+        acquiredFood = foodStation.deplete();
+        if (acquiredFood > 0) {
+            System.out.println("Collision with a FoodStation with capacity " + foodStation.getCapacity());
+            objects.add(new FoodStation(new GameWorldObjectProxy(this)));
         }
-        
         player.setFoodLevel(player.getFoodLevel() + acquiredFood);
-        objects.add(new FoodStation(new GameWorldInfoProxy(this)));
         setChanged();
     }
 
@@ -178,7 +165,7 @@ public class GameWorld extends Observable implements IGameWorld {
      * @see com.mycompany.a3.IGameWorld#handleSpiderCollision()
      */
     public void handleSpiderCollision() {
-        System.out.println("SIMULATING collision with a Spider");
+        System.out.println("Collision with a Spider");
         player.decreaseHealth();
         if (player.getHealthLevel() == 0) {
             System.out.println("Player death");
@@ -214,7 +201,7 @@ public class GameWorld extends Observable implements IGameWorld {
                         object.getCollisionSet().add(otherObject);
                         otherObject.getCollisionSet().add(object);
                     }
-                } else {
+                } else if (object != otherObject && !object.collidesWith(otherObject)) {
                     object.getCollisionSet().remove(otherObject);
                     otherObject.getCollisionSet().remove(object);
                 }

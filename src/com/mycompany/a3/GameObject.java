@@ -130,7 +130,21 @@ public abstract class GameObject implements ICollider, IDrawable {
     }
 
     public void handleCollision(GameObject otherObject) {
-        System.out.println(this + " collided with " + otherObject);
+        if (this instanceof Ladybug) {
+            if (otherObject instanceof Flag) {
+                getGw().handleFlagCollision((Flag) otherObject);
+            } else if (otherObject instanceof Spider) {
+                getGw().handleSpiderCollision();
+            } else if (otherObject instanceof FoodStation) {
+                getGw().handleFoodCollision((FoodStation) otherObject);
+            }
+        } else if (this instanceof Flag && otherObject instanceof Ladybug) {
+            getGw().handleFlagCollision((Flag) this);
+        } else if (this instanceof Spider && otherObject instanceof Ladybug) {
+            getGw().handleSpiderCollision();
+        } else if (this instanceof FoodStation && otherObject instanceof Ladybug) {
+            getGw().handleFoodCollision((FoodStation) this);
+        }
     }
 
     public HashSet<GameObject> getCollisionSet() {

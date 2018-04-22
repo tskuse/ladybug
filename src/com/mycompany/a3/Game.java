@@ -62,16 +62,13 @@ public class Game extends Form implements Runnable {
         this.add(BorderLayout.EAST, rightControlContainer);
 
         this.add(BorderLayout.SOUTH,
-                 FlowLayout.encloseCenter(createCommandButton(CollideFlagCommand.getCommand(gw)),
-                                          createCommandButton(CollideSpiderCommand.getCommand(gw)),
-                                          createCommandButton(CollideFoodCommand.getCommand(gw)),
+                 FlowLayout.encloseCenter(createCommandButton(CollideSpiderCommand.getCommand(gw)),
                                           createCommandButton(TickClockCommand.getCommand(gw, TICK_RATE))));        
 
         this.addKeyListener('a', AccelerateCommand.getCommand(gw));
         this.addKeyListener('b', BrakeCommand.getCommand(gw));
         this.addKeyListener('l', TurnLeftCommand.getCommand(gw));
         this.addKeyListener('r', TurnRightCommand.getCommand(gw));
-        this.addKeyListener('f', CollideFoodCommand.getCommand(gw));
         this.addKeyListener('g', CollideSpiderCommand.getCommand(gw));
         this.addKeyListener('t', TickClockCommand.getCommand(gw, TICK_RATE));
         this.addKeyListener('x', ExitCommand.getCommand(gw));
