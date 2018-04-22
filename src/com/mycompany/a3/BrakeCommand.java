@@ -21,7 +21,9 @@ public class BrakeCommand extends Command {
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        gw.brakePlayer();
-        gw.notifyObservers();
+        if (isEnabled()) {
+            gw.brakePlayer();
+            gw.notifyObservers();
+        }
     }
 }

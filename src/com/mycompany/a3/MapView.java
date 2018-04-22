@@ -25,7 +25,7 @@ public class MapView extends Container implements Observer {
     
     public void update(Observable observable, Object data) {
         objects = ((IGameWorld) observable).getObjects();
-        //((IGameWorld) observable).displayMap();
+        ((IGameWorld) observable).displayMap();
         repaint();
     }
     

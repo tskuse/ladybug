@@ -1,9 +1,12 @@
 package com.mycompany.a3;
 
+import java.util.Vector;
+
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Button;
 import com.codename1.ui.CheckBox;
 import com.codename1.ui.Command;
+import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.Form;
 import com.codename1.ui.Toolbar;
@@ -19,9 +22,10 @@ public class Game extends Form implements Runnable {
     private ScoreView sv;
 
     private UITimer timer;
-    private final int TICK_RATE = 20;
+    public final int TICK_RATE = 20;
 
     private BGSound bgSound;
+    private boolean gamePaused;
 
     public Game() {
         gw = new GameWorld();
@@ -40,7 +44,7 @@ public class Game extends Form implements Runnable {
         soundCheckBox.setSelected(gw.isSoundEnabled());
 
         bgSound = new BGSound("timer.wav");
-        toolbar.addComponentToSideMenu(soundCheckBox, ToggleSoundCommand.getCommand(gw, soundCheckBox, bgSound));
+        toolbar.addComponentToSideMenu(soundCheckBox, ToggleSoundCommand.getCommand(gw, this, soundCheckBox, bgSound));
         
         toolbar.addCommandToSideMenu(AboutCommand.getCommand());
         toolbar.addCommandToSideMenu(ExitCommand.getCommand(gw));
@@ -65,22 +69,29 @@ public class Game extends Form implements Runnable {
         rightControlContainer.getAllStyles().setPadding(Container.TOP, 200);
         this.add(BorderLayout.EAST, rightControlContainer);
 
+        // add all play control components to a vector to pass to the pause command so they can be disabled
+        Vector<Component> playControlComponents = new Vector<Component>();
+        for (Component cmp : leftControlContainer) {
+            playControlComponents.add(cmp);
+        }
+        for (Component cmp : rightControlContainer) {
+            playControlComponents.add(cmp);
+        }
+
         this.add(BorderLayout.SOUTH,
-                 FlowLayout.encloseCenter(createCommandButton(CollideSpiderCommand.getCommand(gw)),
-                                          createCommandButton(TickClockCommand.getCommand(gw, TICK_RATE))));        
+                 FlowLayout.encloseCenter(createCommandButton(PlayPauseCommand.getCommand(gw, this, playControlComponents))));        
 
         this.addKeyListener('a', AccelerateCommand.getCommand(gw));
         this.addKeyListener('b', BrakeCommand.getCommand(gw));
         this.addKeyListener('l', TurnLeftCommand.getCommand(gw));
         this.addKeyListener('r', TurnRightCommand.getCommand(gw));
-        this.addKeyListener('g', CollideSpiderCommand.getCommand(gw));
-        this.addKeyListener('t', TickClockCommand.getCommand(gw, TICK_RATE));
         this.addKeyListener('x', ExitCommand.getCommand(gw));
         
         this.show();
         gw.init(mv.getWidth(), mv.getHeight());
         gw.notifyObservers();
 
+        gamePaused = false;
         if (gw.isSoundEnabled()) {
             bgSound.play();
         }
@@ -102,6 +113,22 @@ public class Game extends Form implements Runnable {
         gw.tickClock(TICK_RATE);
         gw.notifyObservers();
         repaint();
-	}
+    }
+    
+    public UITimer getTimer() {
+        return timer;
+    }
+
+    public BGSound getBgSound() {
+        return bgSound;
+    }
+
+    public boolean isGamePaused() {
+        return gamePaused;
+    }
+
+    public void setGamePaused(boolean enabled) {
+        gamePaused = enabled;
+    }
 
 }

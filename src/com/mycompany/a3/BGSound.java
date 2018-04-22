@@ -27,6 +27,10 @@ public class BGSound implements Runnable {
         m.play();
     }
 
+    public boolean isPlaying() {
+        return m.isPlaying();
+    }
+
 	public void run() {
         m.setTime(0);
         m.play();

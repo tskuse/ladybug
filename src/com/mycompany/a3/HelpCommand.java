@@ -14,9 +14,6 @@ public class HelpCommand extends Command {
                                      "'b' - Brake\n" +
                                      "'l' - Left turn\n" +
                                      "'r' - Right turn\n" +
-                                     "'f' - Food station\n" +
-                                     "'g' - Spider\n" +
-                                     "'t' - Tick game clock\n" +
                                      "'x' - Exit";
     
     private HelpCommand() {
