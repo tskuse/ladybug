@@ -1,6 +1,13 @@
 package com.mycompany.a3;
 
+import com.codename1.components.SpanLabel;
+import com.codename1.ui.Button;
+import com.codename1.ui.Command;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.geom.Point2D;
+import com.codename1.ui.layouts.BorderLayout;
+
 import java.util.Observable;
 import java.util.Random;
 
@@ -85,7 +92,10 @@ public class GameWorld extends Observable implements IGameWorld {
      * Displays output on successful win condition
      */
     private void win() {
-        System.out.println("Game over, you win! Total time: " + clockTime);
+        Dialog dialog = new Dialog("Winner Winner Chicken Dinner!", new BorderLayout());
+        dialog.add(BorderLayout.CENTER, new SpanLabel("Game over, you win! Total time: " + clockTime / 50 + " seconds."));
+        dialog.add(BorderLayout.SOUTH, new Button(new Command("Ok")));
+        dialog.showDialog();
         exit();
     }
     
@@ -94,7 +104,7 @@ public class GameWorld extends Observable implements IGameWorld {
      */
     public void exit() {
         System.out.println("Exiting..");
-        System.exit(0);
+        Display.getInstance().exitApplication();
     }
 
     /* (non-Javadoc)
@@ -198,7 +208,7 @@ public class GameWorld extends Observable implements IGameWorld {
      * @see com.mycompany.a3.IGameWorld#tickClock()
      */
     public void tickClock(int tickRate) {
-        //System.out.println("Ticking game clock...");
+        System.out.println("Ticking game clock...");
 
         IIterator<GameObject> it = objects.getIterator();
         while (it.hasNext()) {
@@ -206,11 +216,6 @@ public class GameWorld extends Observable implements IGameWorld {
             if (object instanceof Movable) {
                 ((Movable) object).move(tickRate);
             }
-        }
-
-        it = objects.getIterator();
-        while (it.hasNext()) {
-            GameObject object = it.getNext();
             IIterator<GameObject> it2 = objects.getIterator();
             while (it2.hasNext()) {
                 GameObject otherObject = it2.getNext();
@@ -288,6 +293,9 @@ public class GameWorld extends Observable implements IGameWorld {
         setChanged();
     }
 
+    /* (non-Javadoc)
+     * @see com.mycompany.a3.IGameWorld#getObjects()
+     */
     public GameObjectCollection<GameObject> getObjects() {
         return objects;
     }

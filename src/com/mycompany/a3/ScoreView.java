@@ -51,7 +51,7 @@ public class ScoreView extends Container implements Observer {
     public void update(Observable observable, Object data) {
         IGameWorld gw = ((IGameWorld) observable);
         Ladybug player = gw.getPlayer();
-        timeValue.setText(Integer.toString(gw.getClockTime() / (1000 / tickRate)));
+        timeValue.setText(Integer.toString(gw.getClockTime() * tickRate / 1000));
         livesValue.setText(Integer.toString(gw.getLivesRemaining()));
         flagValue.setText(Integer.toString(player.getLastFlagReached()));
         foodValue.setText(Integer.toString(player.getFoodLevel()));

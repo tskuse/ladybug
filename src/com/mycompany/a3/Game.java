@@ -106,7 +106,16 @@ public class Game extends Form implements Runnable {
         timer = new UITimer(this);
         timer.schedule(TICK_RATE, true, this);
     }
-    
+
+	public void run() {
+        gw.tickClock(TICK_RATE);
+        gw.notifyObservers();
+        repaint();
+    }
+  
+    /**
+     * @return A generated Button with specialized styling linked to the associated Command
+     */
     private Button createCommandButton(Command command) {
         Button button = new Button(command);
         button.getUnselectedStyle().setBgTransparency(255);
@@ -117,40 +126,58 @@ public class Game extends Form implements Runnable {
         return button;
     }
 
-	public void run() {
-        gw.tickClock(TICK_RATE);
-        gw.notifyObservers();
-        repaint();
-    }
-    
+    /**
+     * @return the timer
+     */
     public UITimer getTimer() {
         return timer;
     }
 
+    /**
+     * @return the bgSound
+     */
     public BGSound getBgSound() {
         return bgSound;
     }
 
+    /**
+     * @return the gamePaused
+     */
     public boolean isGamePaused() {
         return gamePaused;
     }
 
-    public void setGamePaused(boolean enabled) {
-        gamePaused = enabled;
+    /**
+     * @param gamePaused the gamePaused to set
+     */
+    public void setGamePaused(boolean gamePaused) {
+        this.gamePaused = gamePaused;
     }
 
+    /**
+     * @param lastSelectedObject the lastSelectedObject to set
+     */
     public void setLastSelectedObject(ISelectable lastSelectedObject) {
         this.lastSelectedObject = lastSelectedObject;
     }
 
+    /**
+     * @return the lastSelectedObject
+     */
     public ISelectable getLastSelectedObject() {
         return lastSelectedObject;
     }
 
+    /**
+     * @return the moveSelectedObject
+     */
     public boolean isMoveSelectedObject() {
         return moveSelectedObject;
     }
 
+    /**
+     * @param moveSelectedObject the moveSelectedObject to set
+     */
     public void setMoveSelectedObject(boolean moveSelectedObject) {
         this.moveSelectedObject = moveSelectedObject;
     }

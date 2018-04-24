@@ -119,6 +119,10 @@ public abstract class GameObject implements ICollider, IDrawable {
         return gw;
     }
 
+    /**
+     * @param otherObject the other GameObject
+     * @return true if it collides with the other GameObject
+     */
     public boolean collidesWith(GameObject otherObject) {
         int edgeDistance1 = (getSize() + 1) / 2;
         double l1 = getLocation().getX() - edgeDistance1;
@@ -133,6 +137,10 @@ public abstract class GameObject implements ICollider, IDrawable {
         return !(((r1 < l2) || (l1 > r2)) || ((t2 < b1) || (t1 < b2)));
     }
 
+    /**
+     * Calls the appropriate collision handler in GameWorld
+     * @param otherObject the other GameObject in the collision
+     */
     public void handleCollision(GameObject otherObject) {
         if (this instanceof Ladybug) {
             if (otherObject instanceof Flag) {
@@ -151,6 +159,9 @@ public abstract class GameObject implements ICollider, IDrawable {
         }
     }
 
+    /**
+     * @return true if this GameObject collides with any other in the GameWorld
+     */
     public boolean collidesWithAny() {
         IIterator<GameObject> it = getGw().getObjects().getIterator();
         while (it.hasNext()) {
@@ -162,6 +173,9 @@ public abstract class GameObject implements ICollider, IDrawable {
         return false;
     }
 
+    /**
+     * @return the collisionSet
+     */
     public HashSet<GameObject> getCollisionSet() {
         return collisionSet;
     }

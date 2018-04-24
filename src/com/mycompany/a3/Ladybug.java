@@ -12,7 +12,7 @@ public class Ladybug extends Movable implements ISteerable {
     private static final int DEFAULT_COLOR = ColorUtil.rgb(255, 0, 0);
     private static final int COLOR_MODIFIER = ColorUtil.rgb(0, 20, 20);
     private static final int DEFAULT_HEADING = 0;
-    private static final int DEFAULT_SPEED = 100;
+    private static final int DEFAULT_SPEED = 200;
     private static final int DEFAULT_MAX_SPEED = 400;
     private static final int DEFAULT_FOOD_LEVEL = 20;
     private static final int FOOD_CONSUMPTION_RATE = 50;
@@ -40,20 +40,18 @@ public class Ladybug extends Movable implements ISteerable {
      */
     private Ladybug(IGameWorld gw, Point2D location) {
         super(gw, location, DEFAULT_SIZE, DEFAULT_COLOR, DEFAULT_HEADING, DEFAULT_SPEED);
-        this.maximumSpeed = DEFAULT_MAX_SPEED;
-        this.foodLevel = DEFAULT_FOOD_LEVEL;
-        this.healthLevel = DEFAULT_HEALTH;
-        this.lastFlagReached = DEFAULT_LAST_FLAG;
-        this.foodConsumption = 0;
+        reset();
     }
 
     /**
      * Reset the player
      */
     public void reset() {
-        setFoodLevel(DEFAULT_FOOD_LEVEL);
+        this.maximumSpeed = DEFAULT_MAX_SPEED;
+        this.foodLevel = DEFAULT_FOOD_LEVEL;
+        this.healthLevel = DEFAULT_HEALTH;
+        this.lastFlagReached = DEFAULT_LAST_FLAG;
         this.foodConsumption = 0;
-        setHealthLevel(DEFAULT_HEALTH);
         updateColor();
     }
 
