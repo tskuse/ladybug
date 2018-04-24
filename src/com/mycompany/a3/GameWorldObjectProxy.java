@@ -85,7 +85,7 @@ public class GameWorldObjectProxy implements IGameWorld {
     }
 
     public GameObjectCollection<GameObject> getObjects() {
-        return null;
+        return realGameWorld.getObjects();
     }
 
 }

@@ -4,12 +4,14 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point2D;
 
-public class Flag extends Fixed implements IUncolorable {
+public class Flag extends Fixed implements ISelectable, IUncolorable {
 
     private static final int DEFAULT_SIZE = 100;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(0, 0, 255);
 
     private int sequenceNumber;
+    private boolean selected;
+    private boolean selectable;
 
     /**
      * @param location
@@ -18,6 +20,8 @@ public class Flag extends Fixed implements IUncolorable {
     public Flag(IGameWorld gw, Point2D location, int sequenceNumber) {
         super(gw, location, DEFAULT_SIZE, DEFAULT_COLOR);
         this.sequenceNumber = sequenceNumber;
+        this.selected = false;
+        this.selectable = false;
     }
 
     /**
@@ -47,11 +51,32 @@ public class Flag extends Fixed implements IUncolorable {
         Point2D v2 = new Point2D(origin.getX() - (getSize() + 1) / 2, origin.getY() - (getSize() + 1) / 2);
         Point2D v3 = new Point2D(origin.getX() + (getSize() + 1) / 2, origin.getY() - (getSize() + 1) / 2);
         g.setColor(getColor());
-        g.fillTriangle((int) v1.getX(), (int) v1.getY(), (int) v2.getX(), (int) v2.getY(), (int) v3.getX(), (int) v3.getY());
-        g.setColor(ColorUtil.rgb(255, 255, 255));
+        if (selected) {
+            g.drawPolygon(new int[] {(int) v1.getX(), (int) v2.getX(), (int) v3.getX()},
+                          new int[] {(int) v1.getY(), (int) v2.getY(), (int) v3.getY()}, 3);
+        } else {
+            g.fillTriangle((int) v1.getX(), (int) v1.getY(), (int) v2.getX(), (int) v2.getY(), (int) v3.getX(), (int) v3.getY());
+            g.setColor(ColorUtil.rgb(255, 255, 255));
+        }
         g.drawStringBaseline(Integer.toString(sequenceNumber),
                              (int) origin.getX() - (g.getFont().stringWidth(Integer.toString(sequenceNumber)) + 1) / 2,
                              (int) origin.getY());
+	}
+
+	public void setSelected(boolean enabled) {
+        this.selected = enabled;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelectable(boolean enabled) {
+		this.selectable = enabled;
+	}
+
+	public boolean isSelectable() {
+		return selectable;
 	}
 
 }

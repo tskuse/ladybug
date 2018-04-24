@@ -26,6 +26,8 @@ public class Game extends Form implements Runnable {
 
     private BGSound bgSound;
     private boolean gamePaused;
+    private ISelectable lastSelectedObject;
+    private boolean moveSelectedObject;
 
     public Game() {
         gw = new GameWorld();
@@ -70,17 +72,23 @@ public class Game extends Form implements Runnable {
         this.add(BorderLayout.EAST, rightControlContainer);
 
         // add all play control components to a vector to pass to the pause command so they can be disabled
-        Vector<Component> playControlComponents = new Vector<Component>();
+        Vector<Component> controlComponents = new Vector<Component>();
         for (Component cmp : leftControlContainer) {
-            playControlComponents.add(cmp);
+            controlComponents.add(cmp);
         }
         for (Component cmp : rightControlContainer) {
-            playControlComponents.add(cmp);
+            controlComponents.add(cmp);
         }
 
-        this.add(BorderLayout.SOUTH,
-                 FlowLayout.encloseCenter(createCommandButton(PlayPauseCommand.getCommand(gw, this, playControlComponents))));        
+        Button positionButton = createCommandButton(PositionCommand.getCommand());
+        PositionCommand.getCommand().setEnabled(false); 
+        positionButton.setEnabled(false);
+        controlComponents.add(positionButton);
 
+        this.add(BorderLayout.SOUTH,
+                 FlowLayout.encloseCenter(positionButton,
+                                          createCommandButton(PlayPauseCommand.getCommand(gw, this, controlComponents))));
+        
         this.addKeyListener('a', AccelerateCommand.getCommand(gw));
         this.addKeyListener('b', BrakeCommand.getCommand(gw));
         this.addKeyListener('l', TurnLeftCommand.getCommand(gw));
@@ -129,6 +137,22 @@ public class Game extends Form implements Runnable {
 
     public void setGamePaused(boolean enabled) {
         gamePaused = enabled;
+    }
+
+    public void setLastSelectedObject(ISelectable lastSelectedObject) {
+        this.lastSelectedObject = lastSelectedObject;
+    }
+
+    public ISelectable getLastSelectedObject() {
+        return lastSelectedObject;
+    }
+
+    public boolean isMoveSelectedObject() {
+        return moveSelectedObject;
+    }
+
+    public void setMoveSelectedObject(boolean moveSelectedObject) {
+        this.moveSelectedObject = moveSelectedObject;
     }
 
 }

@@ -27,10 +27,5 @@ public abstract class Fixed extends GameObject {
         Point2D location = super.getLocation();
         return new Point2D(location.getX(), location.getY());
     }
-    
-    @Override
-    public void setLocation(Point2D location) {
-        return;
-    }
 
 }

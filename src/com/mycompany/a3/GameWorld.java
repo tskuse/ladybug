@@ -59,10 +59,13 @@ public class GameWorld extends Observable implements IGameWorld {
         Random random = new Random();
         for (int i = 0; i < TOTAL_FLAGS; i++) {
             // choosing random locations for flags for now
-            objects.add(new Flag(new GameWorldObjectProxy(this),
-                                 new Point2D(random.nextDouble() * this.getMaxWidth(),
-                                             random.nextDouble() * this.getMaxHeight()),
-                                 i + 1));
+            Flag flag;
+            do {
+                flag = new Flag(new GameWorldObjectProxy(this),
+                                new Point2D(random.nextDouble() * this.getMaxWidth(), random.nextDouble() * this.getMaxHeight()),
+                                i + 1);
+            } while (flag.collidesWithAny());
+            objects.add(flag);
         }
         
         // add ladybug at flag 1

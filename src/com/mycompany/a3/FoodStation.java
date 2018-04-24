@@ -4,17 +4,21 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point2D;
 
-public class FoodStation extends Fixed {
+public class FoodStation extends Fixed implements ISelectable {
 
     private static final double DEFAULT_CAPACITY_RATIO = 0.2;
     private static final int DEFAULT_COLOR = ColorUtil.rgb(0, 255, 0);
     private static final int DEPLETED_COLOR = ColorUtil.rgb(155, 255, 155);
 
     private int capacity;
+    private boolean selected;
+    private boolean selectable;
 
     public FoodStation(IGameWorld gw) {
         super(gw, DEFAULT_COLOR);
         this.capacity = (int) (this.getSize() * DEFAULT_CAPACITY_RATIO);
+        this.selected = false;
+        this.selectable = false;
     }
 
     /**
@@ -52,13 +56,35 @@ public class FoodStation extends Fixed {
 	public void draw(Graphics g, Point2D pCmpRelPrnt) {
         Point2D origin = new Point2D(pCmpRelPrnt.getX() + getLocation().getX(), pCmpRelPrnt.getY() + getLocation().getY());
         g.setColor(getColor());
-        g.fillRect((int) origin.getX() - (getSize() + 1) / 2,
-                   (int) origin.getY() - (getSize() + 1) / 2,
-                   getSize(), getSize());
+        if (selected) {
+            g.drawRect((int) origin.getX() - (getSize() + 1) / 2,
+                       (int) origin.getY() - (getSize() + 1) / 2,
+                       getSize(), getSize());
+        } else {
+            g.fillRect((int) origin.getX() - (getSize() + 1) / 2,
+                       (int) origin.getY() - (getSize() + 1) / 2,
+                       getSize(), getSize());
+        }
         g.setColor(ColorUtil.BLACK);
         g.drawStringBaseline(Integer.toString(capacity),
                              (int) origin.getX() - (g.getFont().stringWidth(Integer.toString(capacity)) + 1) / 2,
                              (int) origin.getY() + (g.getFont().getHeight() + 1) / 4);
+	}
+
+	public void setSelected(boolean enabled) {
+        this.selected = enabled;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelectable(boolean enabled) {
+		this.selectable = enabled;
+	}
+
+	public boolean isSelectable() {
+		return selectable;
 	}
 
 }

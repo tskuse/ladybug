@@ -23,8 +23,10 @@ public abstract class GameObject implements ICollider, IDrawable {
         this.gw = gw;
         Random random = new Random();
         this.size = random.nextInt(MAXIMUM_SIZE - MINIMUM_SIZE + 1) + MINIMUM_SIZE;
-        this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
-                                                     random.nextDouble() * gw.getMaxHeight()), size);
+        do {
+            this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
+                                                         random.nextDouble() * gw.getMaxHeight()), size);
+        } while (collidesWithAny());
         this.color = color;
         this.collisionSet = new HashSet<GameObject>();
     }
@@ -36,8 +38,10 @@ public abstract class GameObject implements ICollider, IDrawable {
         this.gw = gw;
         Random random = new Random();
         this.size = size;
-        this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
-                                                     random.nextDouble() * gw.getMaxHeight()), size);
+        do {
+            this.location = validateLocation(new Point2D(random.nextDouble() * gw.getMaxWidth(),
+                                                         random.nextDouble() * gw.getMaxHeight()), size);
+        } while (collidesWithAny());
         this.color = color;
         this.collisionSet = new HashSet<GameObject>();
     }
@@ -145,6 +149,17 @@ public abstract class GameObject implements ICollider, IDrawable {
         } else if (this instanceof FoodStation && otherObject instanceof Ladybug) {
             getGw().handleFoodCollision((FoodStation) this);
         }
+    }
+
+    public boolean collidesWithAny() {
+        IIterator<GameObject> it = getGw().getObjects().getIterator();
+        while (it.hasNext()) {
+            GameObject object = it.getNext();
+            if (this != object && collidesWith(object)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public HashSet<GameObject> getCollisionSet() {
